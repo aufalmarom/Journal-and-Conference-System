@@ -28,13 +28,13 @@
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Price</label>
-                                    <input type="text" class="form-control" name="price" placeholder="Price">
+                                    <input type="number" class="form-control" name="price" placeholder="Price">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Virtual Account</label>
-                                <input type="text" class="form-control" name="va" placeholder="Virtual Account">
+                                <input type="number" class="form-control" name="va" placeholder="Virtual Account">
                                 </div>
                             </div>
 

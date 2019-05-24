@@ -26,7 +26,7 @@
                     <div class="stats-small__data text-center">
                         <a href="{{route('reregistrationpaper.read')}}">
                             <span class="stats-small__label text-uppercase">Paper / Author</span>
-                            <h6 class="stats-small__value count my-3">-</h6>
+                            <h6 class="stats-small__value count my-3">{{CountRegistPaper()}}</h6>
                         </a>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                     <div class="stats-small__data text-center">
                         <a href="{{route('reregistrationparticipant.read')}}">
                             <span class="stats-small__label text-uppercase">Participant</span>
-                            <h6 class="stats-small__value count my-3">-</h6>
+                            <h6 class="stats-small__value count my-3">{{CountParticipantConfirmed()}}</h6>
                         </a>
                     </div>
                 </div>

@@ -43,26 +43,25 @@
                         <tr>
                             <th>No</th>
                             <th>Title</th>
-                            <th class="text-center">Status</th>
+                            <th>Authors</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($datas as $data)
+                        @foreach ($datas as $data)
                         <tr>
                         <td></td>
-                        <td>{{$data->name}}</td>
-                        <td>{{$data->email}}</td>
-                        <td class="text-center">{{StatusAllReviewer($data->id)}}</td>
-                        <form method="POST" action="{{route('reviewer.delete')}}">
+                        <td>{{$data->title}}</td>
+                        <td>{{TeamPaper($data->team_code)}}</td>
+                        <form method="POST" action="{{route('reviewabstractreviewed.post')}}">
                                 @csrf
                             <td class="text-center">
                                 <input  type="hidden" name="id" value="{{$data->id}}">
-                                <button type="submit" class="btn btn-danger" title="Delete Reviewer"><i class="material-icons">delete</i></button>
+                                <button type="submit" class="btn btn-accent" title="Review Abstract Reviewed"><i class="material-icons">edit</i></button>
                             </td>
                         </form>
                         </tr>
-                        @endforeach --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>

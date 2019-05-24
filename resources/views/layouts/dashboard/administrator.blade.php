@@ -41,7 +41,7 @@
                     <div class="stats-small__data text-center">
                         <a href="{{route('paper.total')}}">
                             <span class="stats-small__label text-uppercase">Paper</span>
-                            <h6 class="stats-small__value count my-3">-</h6>
+                            <h6 class="stats-small__value count my-3">{{CountAllPaper()}}</h6>
                         </a>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                     <div class="stats-small__data text-center">
                         <a href="{{route('ppt.total')}}">
                             <span class="stats-small__label text-uppercase">Powerpoint</span>
-                            <h6 class="stats-small__value count my-3">-</h6>
+                            <h6 class="stats-small__value count my-3">{{CountAllPowerpoint()}}</h6>
                         </a>
                     </div>
                 </div>
@@ -100,7 +100,6 @@
                     <div class="stats-small__data text-center">
                         <a href="{{route('reregistration.read')}}">
                             <span class="stats-small__label text-uppercase">Re-registration</span>
-                            <h6 class="stats-small__value count my-3">{{CountAllParticipantsAuthors()}}</h6>
                         </a>
                     </div>
                 </div>

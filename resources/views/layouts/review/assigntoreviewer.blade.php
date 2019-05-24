@@ -47,7 +47,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <label>Topic : {{$data_topic->title}}</label>
+                                    <label>Topic : {{$data->topics->title}}</label>
                                 </div>
                             </div>
                             <div class="form-row">

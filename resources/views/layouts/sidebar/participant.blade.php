@@ -3,7 +3,7 @@
         <nav class="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
         <a class="navbar-brand w-100 mr-0" href="{{route('dashboard')}}" style="line-height: 25px;">
             <div class="d-table m-auto">
-            <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="storage/app/public/{{Logo()}}" alt="Shards Dashboard">
+            <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="{{asset('public/logo.png')}}">
             <span class="d-none d-md-inline ml-1">ICTCRED Participant</span>
             </div>
         </a>
@@ -35,13 +35,12 @@
                 Invoice
             </a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" href="{{route('logactivity.read')}}">
                 <i class="material-icons">history</i>
                 <span>Log Acitivity</span>
             </a>
-        </li>
-
+        </li> --}}
         </ul>
     </div>
 </aside>

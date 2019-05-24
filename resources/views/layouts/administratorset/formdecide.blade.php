@@ -69,102 +69,57 @@
     </div>
 
     <div class="row">
+        @php
+            $no = 1
+        @endphp
+        @foreach ($reviewer as $data)
         <div class="col-lg-4">
             <div class="card card-small mb-4">
             <div class="card-header border-bottom">
-                <h6 class="m-0">Scores Form Reviewer 1</h6>
+                <h6 class="m-0">Score from Reviewer {{$no}} : {{$data->user->name}} </h6>
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item p-3">
                 <div class="row">
                     <div class="col">
+                        @php
+                            $recomendation = 0;
+                        @endphp
+                        @for ($i = 0; $i < count($data->abstractscore); $i++)
+                        @if ($data->id_reviewer == $data->abstractscore[$i]->id_reviewer)
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                    <br>
-                                @foreach ($score as $data)
-                                    <div class="custom-radio mb-1">
-                                        <label class="custom-control-label"> {{$data->evaluation->label}} = {{$data->score}} : {{Note($data->id_evaluation, $data->score)}} </label>
-                                    </div>
-                                @endforeach
+                                <label>{{$data->abstractscore[$i]->evaluation->label}} = {{$data->abstractscore[$i]->score}} : {{Note($data->abstractscore[$i]->id_evaluation, $data->abstractscore[$i]->score)}} </label>
                             </div>
                         </div>
+                        @php
+                            $recomendation += $data->abstractscore[$i]->score;
+                        @endphp
+                        @endif
+                        @endfor
+                        @php
+                            $recomendation = round($recomendation/4, 0, PHP_ROUND_HALF_DOWN)
+                        @endphp
+                        @if ($recomendation != 0)
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label>Recommendation : {{$nilai_rekomendasi}} : {{NoteRecommendation($nilai_rekomendasi)}} </label>
+                                <label>Recommendation = {{$recomendation}} : {{NoteRecommendation($recomendation)}} </label>
                             </div>
                         </div>
+                        @else
+                        'Reviewer not yet send Scores'
+                        @endif
                     </div>
                 </div>
-
                 </li>
             </ul>
             </div>
         </div>
+        @php
+            $no++;
+        @endphp
 
-        <div class="col-lg-4">
-            <div class="card card-small mb-4">
-            <div class="card-header border-bottom">
-                <h6 class="m-0">Scores Form Reviewer 2</h6>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item p-3">
-                <div class="row">
-                    <div class="col">
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <br>
-                                @foreach ($score as $data)
-                                    <div class="custom-radio mb-1">
-                                        <label class="custom-control-label"> {{$data->evaluation->label}} = {{$data->score}} : {{Note($data->id_evaluation, $data->score)}} </label>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label>Recommendation : {{$nilai_rekomendasi}} : {{NoteRecommendation($nilai_rekomendasi)}} </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                </li>
-            </ul>
-            </div>
-        </div>
-
-        <div class="col-lg-4">
-            <div class="card card-small mb-4">
-            <div class="card-header border-bottom">
-                <h6 class="m-0">Scores Form Reviewer 3</h6>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item p-3">
-                <div class="row">
-                    <div class="col">
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <br>
-                                @foreach ($score as $data)
-                                    <div class="custom-radio mb-1">
-                                        <label class="custom-control-label"> {{$data->evaluation->label}} = {{$data->score}} : {{Note($data->id_evaluation, $data->score)}} </label>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label>Recommendation : {{$nilai_rekomendasi}} : {{NoteRecommendation($nilai_rekomendasi)}} </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                </li>
-            </ul>
-            </div>
-        </div>
-
+        @endforeach
     </div>
 
     <div class="row">
@@ -180,7 +135,7 @@
 
                         <form method="POST" action="{{route('formdecide.post')}}">
                             @csrf
-                            <input type="hidden" name="id_paper" value="{{$score[0]->id_paper}}">
+                            <input type="hidden" name="id_paper" value="{{$submission->id}}">
                                 <button type="submit" class="btn btn-accent" name="status_paper" value="accept"">Accept</button>
                             </div>
                             <div class="col-sm-6">

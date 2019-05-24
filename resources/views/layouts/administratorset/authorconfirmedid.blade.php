@@ -13,7 +13,21 @@
 
     <div class="row">
         <div class="col">
-            <a class="btn btn-accent" href="{{route('sidebarauthor')}}"><i class="material-icons">keyboard_arrow_left</i> Back</a>
+            <a class="btn btn-accent" href="{{route('sidebarauthor')}}"><i class="material-icons">keyboard_arrow_left</i> Back to Author</a>
+        </div>
+    </div>
+    <br>
+
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-accent" href="{{route('sidebarsecretary')}}"><i class="material-icons">keyboard_arrow_left</i> Back to Secretary</a>
+        </div>
+    </div>
+    <br>
+
+    <div class="row">
+        <div class="col">
+        <a class="btn btn-accent" href="{{route('recapauthor')}}">Export Recap Data(.xls)</a>
         </div>
     </div>
     <br>
@@ -26,7 +40,6 @@
                         <th>No</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,7 +48,6 @@
                     <td></td>
                     <td>{{$data->user->name}}</td>
                     <td>{{$data->user->email}}</td>
-                    <td>{{StatusAuthor()}}</td>
                     </tr>
                     @endforeach
                 </tbody>

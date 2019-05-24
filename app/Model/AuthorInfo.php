@@ -12,4 +12,9 @@ class AuthorInfo extends Model
     {
         return $this->belongsTo('App\Model\User', 'id_user');
     }
+
+    public function auth_cat()
+    {
+        return $this->belongsTo('App\Model\AuthorCategories', 'id_author_categories');
+    }
 }

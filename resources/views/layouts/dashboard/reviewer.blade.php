@@ -37,25 +37,25 @@
             <div class="card-body p-0">
                 <ul class="list-group list-group-small list-group-flush">
                     <li class="list-group-item d-flex px-3">
-                        <span class="text-semibold text-fiord-blue">There is {{CountPaperUnscoredUnreview()}} abstract to score. Please check Paper Menu and Abstract To Score Sub Menu!</span><br>
+                        <span class="text-semibold text-fiord-blue">There is {{CountAbstractToScore()}} abstract to score. Please check Paper Menu and Abstract To Score Sub Menu!</span><br>
                     </li>
                     <li class="list-group-item d-flex px-3">
-                        <span class="text-semibold text-fiord-blue">There is - abstract to review. Please check Paper Menu and Abstract To Review Sub Menu!</span>
+                        <span class="text-semibold text-fiord-blue">There is {{CountAbstractToReview()}} abstract to review. Please check Paper Menu and Abstract To Review Sub Menu!</span>
                     </li>
                     <li class="list-group-item d-flex px-3">
-                        <span class="text-semibold text-fiord-blue">There is - abstract reviewed to review. Please check Paper Menu and Abstract Reviewed Sub Menu!</span>
+                        <span class="text-semibold text-fiord-blue">There is {{CountAbstractReviewedToReview()}} abstract reviewed to review. Please check Paper Menu and Abstract Reviewed Sub Menu!</span>
                     </li>
                     <li class="list-group-item d-flex px-3">
-                        <span class="text-semibold text-fiord-blue">There is - abstract final to decide presentation. Please check Paper Menu and Abstract Final Sub Menu!</span>
+                        <span class="text-semibold text-fiord-blue">There is {{CountAbstractAbstractFinalToDecide()}} abstract final to decide presentation. Please check Paper Menu and Abstract Final Sub Menu!</span>
                     </li>
                     <li class="list-group-item d-flex px-3">
-                        <span class="text-semibold text-fiord-blue">There is - paper to wait review. Please check Paper Menu and Full Paper Sub Menu!</span>
+                        <span class="text-semibold text-fiord-blue">There is {{CountPaperToReview()}} paper to review. Please check Paper Menu and Full Paper Sub Menu!</span>
                     </li>
                     <li class="list-group-item d-flex px-3">
-                        <span class="text-semibold text-fiord-blue">There is - paper underview to review. Please check Paper Menu and Full Paper Underview Sub Menu!</span>
+                        <span class="text-semibold text-fiord-blue">There is {{CountPaperUnderviewToReview()}} paper underview to review. Please check Paper Menu and Full Paper Underview Sub Menu!</span>
                     </li>
                     <li class="list-group-item d-flex px-3">
-                        <span class="text-semibold text-fiord-blue">There is - paper camera ready to see. Please check Paper Menu and Full Paper Camera Ready Sub Menu!</span>
+                        <span class="text-semibold text-fiord-blue">There is {{CountPaperCameraReadyToSee()}} paper camera ready to see. Please check Paper Menu and Full Paper Camera Ready Sub Menu!</span>
                     </li>
                 </ul>
             </div>

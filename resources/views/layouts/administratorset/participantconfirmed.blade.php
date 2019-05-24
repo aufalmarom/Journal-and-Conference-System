@@ -13,16 +13,21 @@
 
     <div class="row">
         <div class="col">
-            <a class="btn btn-accent" href="{{route('sidebarparticipant')}}"><i class="material-icons">keyboard_arrow_left</i> Back</a>
+            <a class="btn btn-accent" href="{{route('sidebarparticipant')}}"><i class="material-icons">keyboard_arrow_left</i> Back to Participant</a>
         </div>
     </div>
     <br>
 
     <div class="row">
         <div class="col">
+            <a class="btn btn-accent" href="{{route('sidebarsecretary')}}"><i class="material-icons">keyboard_arrow_left</i> Back to Secretary</a>
+        </div>
+    </div>
+    <br>
 
+    <div class="row">
+        <div class="col">
         <a class="btn btn-accent" href="{{route('recap')}}">Export Recap Data(.xls)</a>
-
         </div>
     </div>
     <br>
@@ -32,6 +37,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>ID User</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th class="text-center">Status</th>
@@ -41,6 +47,7 @@
                     @foreach ($datas as $data)
                     <tr>
                     <td></td>
+                    <td>{{$data->user->id}}</td>
                     <td>{{$data->user->name}}</td>
                     <td>{{$data->user->email}}</td>
                     <td class="text-center">{{StatusParticipantConfirmed()}}</td>

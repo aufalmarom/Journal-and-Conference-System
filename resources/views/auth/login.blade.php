@@ -4,16 +4,16 @@
 
 @if ($message = Session::get('success_register'))
 <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-                    <strong>{{$message}}</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                <strong>{{$message}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         </div>
+    </div>
 </div>
 
 
@@ -54,14 +54,14 @@
                                 <button type="submit" class="btn btn-pill btn-accent d-table mx-auto">Access Account</button>
                                 </form>
                             </div>
-                            <div class="card-footer border-top">
+                            {{-- <div class="card-footer border-top">
                                 <ul class="auth-form__social-icons d-table mx-auto">
                                 <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
                                 <li><a href="#"><i class="fab fa-twitter"></i></a></li>
                                 <li><a href="#"><i class="fas fa-envelope"></i></a></li>
                                 <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
                                 </ul>
-                            </div>
+                            </div> --}}
                             </div>
                             <div class="auth-form__meta d-flex mt-4">
                             @if (Route::has('password.request'))

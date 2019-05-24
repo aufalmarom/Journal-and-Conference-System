@@ -3,7 +3,7 @@
         <nav class="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
         <a class="navbar-brand w-100 mr-0" href="{{route('dashboard')}}" style="line-height: 25px;">
             <div class="d-table m-auto">
-            <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="{{asset('public/logo.png')}}" alt="Shards Dashboard">
+            <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="{{asset('public/logo.png')}}">
             <span class="d-none d-md-inline ml-1">ICTCRED Administrator</span>
             </div>
         </a>
@@ -47,8 +47,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="dropdown-item" href="{{route('publicationsetup.read')}}">
+                            <span class="sidebar-normal">Publication Submission Setup</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="dropdown-item" href="{{route('evaluationsystem.read')}}">
                             <span class="sidebar-normal">Evaluation System</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="dropdown-item" href="{{route('reregistration.read')}}">
+                            <span class="sidebar-normal">Reregistration System</span>
                         </a>
                     </li>
                 </ul>
@@ -90,7 +100,7 @@
                 </a>
             </li>
 
-            <li class="nav-item"class="nav-item">
+            {{-- <li class="nav-item"class="nav-item">
                 <a class="nav-link collapsed" data-toggle="collapse" href="#log" aria-expanded="false">
                     <i class="material-icons">history</i>
                     <span>Log Activity</span>
@@ -116,7 +126,7 @@
                 </ul>
 
             </div>
-            </li>
+            </li> --}}
 
 
         </ul>

@@ -51,9 +51,11 @@
                     <td>{{$data->title}}</td>
 
                     <td class="text-center">
-                        <a href="{{route('abstracttoscore.getid', $data->id)}}">
+                    <form action="{{route('abstracttoscore.getid')}}" method="post">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$data->id}}">
                         <button type="submit" class="btn btn-accent" title="Give the Score"><i class="material-icons">edit</i></button>
-                        </a>
+                    </form>
                     </td>
                     </tr>
                     @endforeach

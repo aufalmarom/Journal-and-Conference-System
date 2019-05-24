@@ -35,12 +35,12 @@
             <div class="col-lg-6 col-md-12 col-sm-12 mb-4">
                 <div class="card card-small">
                     <div class="card-header border-bottom">
-                        <h6 class="m-0">Pembayaran</h6>
+                        <h6 class="m-0">Payment</h6>
                     </div>
                     <div class="card-body p-0">
                         <ul class="list-group list-group-small list-group-flush">
                         <li class="list-group-item d-flex px-3">
-                            <span class="text-semibold text-fiord-blue">Please pay to <b>Bank Mandiri</b> with Virtual Account(VA) - {{$data->va}} a.n Panitia ICTCRED 2019 - Rp. {{$data->price}},-</span>
+                            <span class="text-semibold text-fiord-blue">Billing : Please pay to <b>Bank Mandiri</b> with Virtual Account(VA) - {{$data->va}} a.n Panitia ICTCRED 2019 - {{Rupiah($data->price)}},-</span>
                         </li>
                         </ul>
                     </div>
@@ -52,16 +52,16 @@
                             <input type="hidden" name="id" value="{{$data->id}}">
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <label for="feEmailAddress">Nominal Transfered</label>
-                                    <input type="text" class="form-control" name="nominal_transfered" id="feEmailAddress" placeholder="Nominal Transfered" value="{{$data->nominal_transfered}}">
+                                    <label>Nominal Transfered</label>
+                                    <input type="number" class="form-control" name="nominal_transfered" placeholder="Nominal Transfered" value="{{$data->nominal_transfered}}">
+                                    <p class="small-text">nominal transfered must match with bill</p>
                                 </div>
                             </div>
                             <div class="form-group custom-file">
                                 <input type="file" name="file_proof" class="custom-file-input" required>
-                                    <label class="custom-file-label" for="validatedCustomFile">{{$data->file_proof}}</label>
+                                    <label class="custom-file-label">{{$data->file_proof}}</label>
                             </div>
                                 <p class="small">*format file : png/jpeg; max size : 1MB</p>
-
                             <button type="submit" class="btn btn-accent">Upload Transaction Proof</button>
                         </div>
                     </form>
@@ -72,8 +72,6 @@
 
 
         @elseif($data->nominal_transfered != NULL && $data->file_proof != NULL && $data->status == NULL)
-
-
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
                 <div class="card card-small">
@@ -107,7 +105,7 @@
                         </li>
                         <li class="list-group-item d-flex px-3">
                             <span class="text-semibold text-fiord-blue">Address</span>
-                            <span class="ml-auto text-right text-semibold text-reagent-gray">{{Auth::user()->alamat}}</span>
+                            <span class="ml-auto text-right text-semibold text-reagent-gray">{{Auth::user()->address}}</span>
                         </li>
                         <li class="list-group-item d-flex px-3">
                             <span class="text-semibold text-fiord-blue">Affiliation</span>
@@ -121,7 +119,7 @@
                         @if ($data->status != NULL)
                         <li class="list-group-item d-flex px-3">
                             <span class="text-semibold text-fiord-blue">QR Code</span>
-                            <span class="ml-auto text-right text-semibold text-reagent-gray"><img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate('No. Invoice : '.$data->no_invoice.'ID User :'.$data->id_user)) !!} "></span>
+                            <span class="ml-auto text-right text-semibold text-reagent-gray"><img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate('No. Invoice : '.$data->no_invoice.' '.'ID User : '.$data->id_user)) !!} "></span>
 
                         </li>
                         <li class="list-group-item d-flex px-3">

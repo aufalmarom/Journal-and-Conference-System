@@ -12,6 +12,8 @@ use App\Model\Team;
 use App\Model\AbstractScore;
 use App\Model\Scores;
 use App\Model\Evaluation;
+use App\Model\InvoicePaper;
+use App\Model\Powerpoint;
 
 function Logo(){
     $data = Welcome::first();
@@ -214,11 +216,6 @@ function StatusParticipantConfirmed()
     }
 }
 
-function StatusAllParticipant()
-{
-
-}
-
 function CekDownloadInvoiceParticipant()
 {
     $data = InvoiceParticipant::where('id_user', Auth::user()->id)->first();
@@ -290,12 +287,11 @@ function CekStatusVerifikasiAuthorInfo()
     return @$data->status_verifikasi;
 }
 
-function CountAllParticipantsAuthors()
+
+function CountAllPaper()
 {
-    $datas_participants = CountParticipantConfirmed();
-    $datas_authors = CountAuthorConfirmedID();
-    $total = $datas_participants + $datas_authors;
-    return $total;
+    $data = count(Submissions::get());
+    return $data;
 }
 
 function CountAbstractUnassigned()
@@ -312,7 +308,125 @@ function CountAbstractUnscored()
 
 function CountAbstractScored()
 {
-    $data = count(Submissions::where('date_assigned', '<>', NULL)->where('date_score', '<>', NULL)->get());
+    $data = count(Submissions::where('date_assigned', '<>', NULL)->where('date_score', '<>', NULL)->where('status_paper', NULL)->get());
+    return $data;
+}
+
+function CountAbstractRejected()
+{
+    $data = count(Submissions::where('date_assigned', '<>', NULL)->where('date_score', '<>', NULL)->where('status_paper', 'reject')->get());
+    return $data;
+}
+
+function CountAbstractAcceptedWaitingInvoice()
+{
+    $data = count(Submissions::where('date_decide', '<>', NULL)->where('date_invoice', NULL)->get());
+    return $data;
+}
+
+function CountAbstractGotInvoiceUnpaid()
+{
+    $data = count(InvoicePaper::where('no_invoice', '<>', NULL)->where('status_payment', NULL)->get());
+    return $data;
+}
+
+function CountPaperWaitingConfirm()
+{
+    $data = count(InvoicePaper::where('file_proof', '<>', NULL)->where('status_payment', NULL)->get());
+    return $data;
+}
+
+function CountPaperPaid()
+{
+    $data = count(InvoicePaper::where('status_payment', 1)->get());
+    return $data;
+}
+
+function CountAbstractUnreview()
+{
+    $data = count(Submissions::where('status_paper', 'accept')->where('status_payment', 1)->where('date_abstract_review', NULL)->where('date_after_review', '<>', NULL)->where('date_abstract_review_revision', NULL)->where('date_abstract_final', NULL)->where('date_abstract_final', NULL)->get());
+    return $data;
+}
+
+function CountAbstractReview()
+{
+    $data = count(Submissions::where('status_paper', 'accept')->where('status_payment', 1)->where('date_abstract_review', '<>', NULL)->where('date_after_review', '<>', NULL)->where('date_abstract_review_revision', NULL)->where('date_abstract_final', NULL)->where('date_abstract_final', NULL)->get());
+    return $data;
+}
+
+function CountAbstractReviewedUnreview()
+{
+    $data = count(Submissions::where('status_paper', 'accept')->where('status_payment', 1)->where('date_after_review', '<>', NULL)->where('date_abstract_review_revision', NULL)->where('date_abstract_final', NULL)->where('date_abstract_final', NULL)->get());
+    return $data;
+}
+
+
+function CountAbstractReviewedReview()
+{
+    $data = count(Submissions::where('status_paper', 'accept')->where('status_payment', 1)->where('date_after_review', '<>', NULL)->where('date_abstract_review_revision', '<>', NULL)->where('date_abstract_final', NULL)->where('date_presentation', NULL)->get());
+    return $data;
+}
+
+
+function CountAbstractFinalUndecideReviewer()
+{
+    $data = count(Submissions::where('status_paper', 'accept')->where('status_payment', 1)->where('date_after_review', '<>', NULL)->where('date_abstract_review_revision', '<>', NULL)->where('date_abstract_final', '<>', NULL)->where('date_presentation', NULL)->where('date_decide_presentation', NULL)->get());
+    return $data;
+}
+
+function CountAbstractFinalUndecideAdministrator()
+{
+    $data = count(Submissions::where('status_paper', 'accept')->where('status_payment', 1)->where('date_after_review', '<>', NULL)->where('date_abstract_review_revision', '<>', NULL)->where('date_abstract_final', '<>', NULL)->where('date_presentation', '<>', NULL)->where('date_decide_presentation', NULL)->get());
+    return $data;
+}
+
+function CountAbstractFinalDecided()
+{
+    $data = count(Submissions::where('status_paper', 'accept')->where('status_payment', 1)->where('date_after_review', '<>', NULL)->where('date_abstract_review_revision', '<>', NULL)->where('date_abstract_final', '<>', NULL)->where('date_presentation', '<>', NULL)->where('date_decide_presentation', '<>', NULL)->get());
+    return $data;
+}
+
+function CountPaperUnreview()
+{
+    $data = count(Submissions::where('status_paper', 'accept')->where('status_payment', 1)->where('date_after_review', '<>', NULL)->where('date_abstract_review_revision', '<>', NULL)->where('date_abstract_final', '<>', NULL)->where('date_presentation', '<>', NULL)->where('date_decide_presentation', '<>', NULL)->where('date_paper', '<>', NULL)->where('date_paper_review', NULL)->where('date_paper_underview', NULL)->where('date_paper_underview_review', NULL)->where('date_paper_camera_ready', NULL)->get());
+    return $data;
+}
+
+function CountPaperReviewed()
+{
+    $data = count(Submissions::where('status_paper', 'accept')->where('status_payment', 1)->where('date_after_review', '<>', NULL)->where('date_abstract_review_revision', '<>', NULL)->where('date_abstract_final', '<>', NULL)->where('date_presentation', '<>', NULL)->where('date_decide_presentation', '<>', NULL)->where('date_paper', '<>', NULL)->where('date_paper_review', '<>', NULL)->where('date_paper_underview', NULL)->where('date_paper_underview_review', NULL)->where('date_paper_camera_ready', NULL)->get());
+    return $data;
+}
+
+function CountPaperUnderviewUnreview()
+{
+    $data = count(Submissions::where('status_paper', 'accept')->where('status_payment', 1)->where('date_after_review', '<>', NULL)->where('date_abstract_review_revision', '<>', NULL)->where('date_abstract_final', '<>', NULL)->where('date_presentation', '<>', NULL)->where('date_decide_presentation', '<>', NULL)->where('date_paper', '<>', NULL)->where('date_paper_review', '<>', NULL)->where('date_paper_underview', '<>', NULL)->where('date_paper_underview_review', NULL)->where('date_paper_camera_ready', NULL)->get());
+    return $data;
+}
+
+
+function CountPaperUnderviewReviewed()
+{
+    $data = count(Submissions::where('status_paper', 'accept')->where('status_payment', 1)->where('date_after_review', '<>', NULL)->where('date_abstract_review_revision', '<>', NULL)->where('date_abstract_final', '<>', NULL)->where('date_presentation', '<>', NULL)->where('date_decide_presentation', '<>', NULL)->where('date_paper', '<>', NULL)->where('date_paper_review', '<>', NULL)->where('date_paper_underview', '<>', NULL)->where('date_paper_underview_review','<>', NULL)->where('date_paper_camera_ready', NULL)->get());
+    return $data;
+}
+
+function CountPaperCameraReady()
+{
+    $data = count(Submissions::where('status_paper', 'accept')->where('status_payment', 1)->where('date_after_review', '<>', NULL)->where('date_abstract_review_revision', '<>', NULL)->where('date_abstract_final', '<>', NULL)->where('date_presentation', '<>', NULL)->where('date_decide_presentation', '<>', NULL)->where('date_paper', '<>', NULL)->where('date_paper_review', '<>', NULL)->where('date_paper_underview', '<>', NULL)->where('date_paper_underview_review','<>', NULL)->where('date_paper_camera_ready', '<>', NULL)->get());
+    return $data;
+}
+
+function CountRegistPaper()
+{
+    $data = count(Submissions::where('status_paper', 'accept')->get());
+    return $data;
+}
+
+
+function CountAllPowerpoint()
+{
+    $data = count(Powerpoint::get());
     return $data;
 }
 
@@ -381,15 +495,66 @@ function CekDoubleDashboard()
 
 // Paper Author Status
 
-function StatusAbstract($id)
+function StatusPaper($id)
 {
     $submission = Submissions::find($id);
 
-    if ($submission->date_assigned == NULL) {
+    if (@$submission->date_assigned == NULL) {
         return 'Waiting assigned to Reviewer';
     }
-    elseif($submission->date_assigned != NULL && $submission->date_score == NULL ){
+    elseif(@$submission->date_score == NULL ){
         return 'Waiting score from reviewer';
+    }
+    elseif(@$submission->status_paper == 'reject' ){
+        return 'Rejected';
+    }
+    elseif(@$submission->status_paper == 'accept' ){
+        return 'Accepted';
+    }
+    elseif(@$submission->date_decide == NULL){
+        return 'Waiting Decision from Scientific Committe';
+    }
+    elseif(@$submission->date_invoice == NULL){
+        return 'Waiting Invoice from Administrator';
+    }
+    elseif(@$submission->status_payment == NULL){
+        return 'Please finish Payment';
+    }
+    elseif(@$submission->date_abstract_review == NULL){
+        return 'Waiting Review Abstract';
+    }
+    elseif(@$submission->date_after_review == NULL){
+        return 'Waiting submit Abstract Reviewed';
+    }
+    elseif(@$submission->date_abstract_review_revision == NULL){
+        return 'Waiting Review Abstract Reviewed';
+    }
+    elseif(@$submission->date_abstract_final == NULL){
+        return 'Waiting submit Abstract Final';
+    }
+    elseif(@$submission->date_presentation == NULL){
+        return 'Waiting decide presentation';
+    }
+    elseif(@$submission->date_decide_presentation == NULL){
+        return 'Waiting decide presentation';
+    }
+    elseif(@$submission->date_paper == NULL){
+        return 'Waiting submit Full Paper';
+    }
+    elseif(@$submission->date_paper_review == NULL){
+        return 'Waiting review Full Paper';
+    }
+    elseif(@$submission->date_paper_underview == NULL){
+        return 'Waiting submit Full Paper Underview';
+    }
+    elseif(@$submission->date_paper_underview_review == NULL){
+        return 'Waiting review Full Paper Underview';
+    }
+    elseif(@$submission->date_ppt == NULL){
+        return 'Waiting upload PowerPoint';
+    }
+    elseif(@$submission->date_paper_camera_ready == NULL){
+        return 'Waiting submit Full Paper Camera Ready';
     }
     else{
         return '1';
@@ -413,12 +578,96 @@ function TeamPaper($id)
     }
 }
 
-function CountPaperUnscoredUnreview()
+function TeamAbstract($id)
 {
-    $datas = AssignedAbstract::where('id_reviewer', Auth::user()->id)->get();
-    $data_review = AbstractScore::where('id_reviewer', Auth::user()->id)->get();
-    $total = count($datas)-count($data_review);
-    return $total;
+    $datas = Team::where('team_code', $id)->get();
+    foreach ($datas as $data) {
+        echo $data->user->name .', ';
+    }
+}
+
+function CountAbstractToScore()
+{
+    $datas_ab = AssignedAbstract::where('id_reviewer', Auth::user()->id)->get();
+    $jumlah = count($datas_ab);
+    $datas = Submissions::select('submissions.id','abstract_score.score','abstract_score.id_reviewer')->leftjoin('abstract_score', 'submissions.id', '=', 'abstract_score.id_paper')->groupby('abstract_score.id_reviewer')->get();
+    foreach($datas as $item){
+        if($item->id_reviewer == Auth::user()->id){
+            $jumlah = $jumlah - 1;
+        }
+    }
+    return $jumlah;
+}
+
+function CountAbstractToReview()
+{
+    $datas_ab = AssignedAbstract::where('id_reviewer', Auth::user()->id)->get();
+    $jumlah = count($datas_ab);
+    $datas = Submissions::select('submissions.id','abstract_review.abstract_review','abstract_review.id_reviewer')->leftjoin('abstract_review', 'submissions.id', '=', 'abstract_review.id_paper')->get();
+    foreach($datas as $item){
+        if($item->id_reviewer == Auth::user()->id){
+            $jumlah = $jumlah - 1;
+        }
+    }
+    return $jumlah;
+}
+
+function CountAbstractReviewedToReview()
+{
+    $datas_ab = AssignedAbstract::where('id_reviewer', Auth::user()->id)->get();
+    $jumlah = count($datas_ab);
+    $datas = Submissions::select('submissions.id','abstract_review_revision.abstract_after_review_revision','abstract_review_revision.id_reviewer')->leftjoin('abstract_review_revision', 'submissions.id', '=', 'abstract_review_revision.id_paper')->get();
+    foreach($datas as $item){
+        if($item->id_reviewer == Auth::user()->id){
+            $jumlah = $jumlah - 1;
+        }
+    }
+    return $jumlah;
+}
+
+function CountAbstractAbstractFinalToDecide()
+{
+    $datas_ab = AssignedAbstract::where('id_reviewer', Auth::user()->id)->get();
+    $jumlah = count($datas_ab);
+    $datas = Submissions::select('submissions.id','abstract_final_decision.presentation','abstract_final_decision.id_reviewer')->leftjoin('abstract_final_decision', 'submissions.id', '=', 'abstract_final_decision.id_paper')->get();
+    foreach($datas as $item){
+        if($item->id_reviewer == Auth::user()->id){
+            $jumlah = $jumlah - 1;
+        }
+    }
+    return $jumlah;
+}
+
+function CountPaperToReview()
+{
+    $datas_ab = AssignedAbstract::where('id_reviewer', Auth::user()->id)->get();
+    $jumlah = count($datas_ab);
+    $datas = Submissions::select('submissions.id', 'paper_review.id_reviewer')->leftjoin('paper_review', 'submissions.id', '=', 'paper_review.id_paper')->get();
+    foreach($datas as $item){
+        if($item->id_reviewer == Auth::user()->id){
+            $jumlah = $jumlah - 1;
+        }
+    }
+    return $jumlah;
+}
+
+function CountPaperUnderviewToReview()
+{
+    $datas_ab = AssignedAbstract::where('id_reviewer', Auth::user()->id)->get();
+    $jumlah = count($datas_ab);
+    $datas = Submissions::select('submissions.id', 'paper_underview_review.id_reviewer')->leftjoin('paper_underview_review', 'submissions.id', '=', 'paper_underview_review.id_paper')->get();
+    foreach($datas as $item){
+        if($item->id_reviewer == Auth::user()->id){
+            $jumlah = $jumlah - 1;
+        }
+    }
+    return $jumlah;
+}
+
+function CountPaperCameraReadyToSee()
+{
+    $datas = count(Submissions::where('date_paper_camera_ready', NULL)->get());
+    return $datas;
 }
 
 function Note($id1, $id2){
@@ -428,6 +677,67 @@ function Note($id1, $id2){
 
 function NoteRecommendation($nilai){
     $data = Evaluation::where('label', 'recommendation')->first();
+    $note = Scores::where('id_evaluation', $data->id)->where('score', $nilai)->first();
 
-    return $data->id;
+    return @$note->note;
+}
+
+function StatusReregistrationPaper($id){
+    $data = Submissions::find($id);
+
+    if($data->date_reregist == NULL){
+        return 'Not yet Reregister';
+    }
+    else{
+        return 'Already Reregistered';
+    }
+}
+
+function StatusReregistrationParticipant($id){
+    $data = InvoiceParticipant::find($id);
+
+    if($data->date_reregist == NULL){
+        return 'Not yet Reregister';
+    }
+    else{
+        return 'Already Reregistered';
+    }
+}
+
+function LogSingle($log, $team){
+    $log_simpan = new Log();
+    $log_simpan->log = $log;
+    $log_simpan->by_actor = Auth::user()->id;
+    $log_simpan->to_actor = Auth::user()->id;
+    $log_simpan->save();
+    LogTeam($log, $team);
+
+}
+
+function LogTeam($log, $team){
+    $team = Team::where('team_code',$team)->get();
+    foreach ($team as $item){
+        $log_simpan = new Log();
+        $log_simpan->log = $log;
+        $log_simpan->by_actor = Auth::user()->id;
+        $log_simpan->to_actor = $item->id_user;
+        $log_simpan->save();
+    }
+    LogAdmin($log);
+}
+
+function LogAdmin($log){
+    $admin = User::where('role',1)->get();
+    foreach ($admin as $item){
+        $log_simpan = new Log();
+        $log_simpan->log = $log;
+        $log_simpan->by_actor = Auth::user()->id;
+        $log_simpan->to_actor = $item->id;
+        $log_simpan->save();
+    }
+}
+
+function Rupiah($angka){
+	$hasil_rupiah = "Rp " . number_format($angka,0,',','.');
+	return $hasil_rupiah;
 }

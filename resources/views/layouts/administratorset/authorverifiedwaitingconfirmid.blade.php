@@ -48,7 +48,7 @@
                     <td class="text-center"><img style="width:40px; height:40px; text-align:center; vertical-align:middle" data-pic-title="{{$data->doc_proof}}" data-pic="storage/app/public/datadiri/{{$data->doc_proof}}" src="storage/app/public/datadiri/{{$data->doc_proof}}"></td>
                     <td class="td-actions text-center">
                         <a href="{{route('statusID.post', $data->id_user)}}">
-                            <button type="button" title="Send Invoice" class="btn btn-md btn-link">
+                            <button type="button" title="Aktivasi ID" class="btn btn-md btn-accent">
                                 <i class="material-icons">message</i>
                             </button>
                         </a>

@@ -27,7 +27,7 @@
     </div>
     @endif
 
-    @if ($message = Session::get('fail'))
+    @if ($message = Session::get('danger'))
     <div class="alert alert-fail alert-dismissible fade show" role="alert">
         <strong>{{$message}}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -43,34 +43,22 @@
                         <tr>
                             <th>No</th>
                             <th>Title</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Action</th>
+                            <th class="text-center">Full Paper Camera Ready</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($datas as $data)
+                        @foreach ($datas as $data)
                         <tr>
                         <td></td>
-                        <td>{{$data->name}}</td>
-                        <td>{{$data->email}}</td>
-                        <td class="text-center">{{StatusAllReviewer($data->id)}}</td>
-                        <form method="POST" action="{{route('reviewer.delete')}}">
-                                @csrf
-                            <td class="text-center">
-                                <input  type="hidden" name="id" value="{{$data->id}}">
-                                <button type="submit" class="btn btn-danger" title="Delete Reviewer"><i class="material-icons">delete</i></button>
-                            </td>
-                        </form>
+                        <td>{{$data->title}}</td>
+                        <td class="text-center"></td>
                         </tr>
-                        @endforeach --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
         <br>
-
-
-
 
 
 @endsection

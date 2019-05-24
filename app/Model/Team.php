@@ -17,4 +17,5 @@ class Team extends Model
     {
         return $this->belongsTo('App\Model\Submissions', 'team_code', 'team_code');
     }
+
 }

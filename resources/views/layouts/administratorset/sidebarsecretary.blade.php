@@ -18,4 +18,49 @@
     </div>
     <br>
 
+    <div class="row">
+        <div class="col-lg col-md-6 col-sm-6 mb-4">
+            <div class="stats-small stats-small--1 card card-small">
+                <div class="card-body p-0 d-flex">
+                <div class="d-flex flex-column m-auto">
+                    <div class="stats-small__data text-center">
+                        <a href="{{route('participant.confirmed')}}">
+                            <span class="stats-small__label text-uppercase">Participant Confirmed</span>
+                            <h6 class="stats-small__value count my-3">{{CountParticipantConfirmed()}}</h6>
+                        </a>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg col-md-6 col-sm-6 mb-4">
+            <div class="stats-small stats-small--1 card card-small">
+                <div class="card-body p-0 d-flex">
+                <div class="d-flex flex-column m-auto">
+                    <div class="stats-small__data text-center">
+                        <a href="{{route('author.confirmed')}}">
+                            <span class="stats-small__label text-uppercase">Author Confirmed ID</span>
+                            <h6 class="stats-small__value count my-3">{{CountAuthorConfirmedID()}}</h6>
+                        </a>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg col-md-6 col-sm-6 mb-4">
+            <div class="stats-small stats-small--1 card card-small">
+                <div class="card-body p-0 d-flex">
+                <div class="d-flex flex-column m-auto">
+                    <div class="stats-small__data text-center">
+                        <a href="{{route('abstractfinaldecided.read')}}">
+                            <span class="stats-small__label text-uppercase">abstract final decided</span>
+                            <h6 class="stats-small__value count my-3">{{CountAbstractFinalDecided()}}</h6>
+                        </a>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection

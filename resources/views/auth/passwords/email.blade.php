@@ -31,14 +31,14 @@
                                 <button type="submit" class="btn btn-pill btn-accent d-table mx-auto">Send Password Reset Link</button>
                                 </form>
                             </div>
-                            <div class="card-footer border-top">
+                            {{-- <div class="card-footer border-top">
                                 <ul class="auth-form__social-icons d-table mx-auto">
                                 <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
                                 <li><a href="#"><i class="fab fa-twitter"></i></a></li>
                                 <li><a href="#"><i class="fas fa-envelope"></i></a></li>
                                 <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
                                 </ul>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

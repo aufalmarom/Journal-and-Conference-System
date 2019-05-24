@@ -52,14 +52,7 @@
                   </div>
                   </div>
               </form>
-              <div class="row">
-                  @php
-                      QrCode::size(300)->generate('MyNotePaper');
-                  @endphp
-
-              </div>
               <ul class="navbar-nav border-left flex-row ">
-
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#data" role="button" aria-haspopup="true" aria-expanded="false">
                     <img class="user-avatar rounded-circle mr-2" src="storage/app/public/user/{{Auth::user()->photo}}" alt="User Avatar">
@@ -139,7 +132,6 @@
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.semanticui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
 
-
     <script>
         $(document).ready( function () {
             var t = $('#myTable').DataTable( {
@@ -159,6 +151,33 @@
         } );
 
         $(() => $.imgPreview());
+
+        $(function() {
+	  $(document).on('change', ':file', function() {
+		var input = $(this),
+			numFiles = input.get(0).files ? input.get(0).files.length : 1,
+			label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+		input.trigger('fileselect', [numFiles, label]);
+	  });
+
+	  $(document).ready( function() {
+		  $(':file').on('fileselect', function(event, numFiles, label) {
+
+			  var input = $(this).parents('.input-group').find(':text'),
+				  log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+			  if( input.length ) {
+				  input.val(log);
+			  } else {
+				  if( log ) alert(log);
+			  }
+
+		  });
+	  });
+
+	});
+
+
     </script>
   </body>
 </html>

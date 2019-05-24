@@ -11,4 +11,58 @@
     </div>
     <!-- End Page Header -->
 
-   @endsection
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{$message}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @elseif($message = Session::get('danger'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{$message}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-accent" href="{{route('sidebarpaper')}}"><i class="material-icons">keyboard_arrow_left</i> Back</a>
+        </div>
+    </div>
+    <br>
+
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-accent" href="{{route('sidebarfinance')}}"><i class="material-icons">keyboard_arrow_left</i> Back to Finance</a>
+        </div>
+    </div>
+    <br>
+
+    <div class="row">
+        <div class="col">
+            <table id="myTable" class="ui celled table" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>ID Paper</th>
+                        <th>Title</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($datas as $data)
+                    <tr>
+                    <td></td>
+                    <td>{{$data->id_paper}}</td>
+                    <td>{{$data->submissions->title}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+
+@endsection

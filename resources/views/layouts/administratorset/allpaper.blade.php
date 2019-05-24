@@ -30,14 +30,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @foreach ($datas as $data)
+                    @foreach ($datas as $data)
                     <tr>
                     <td></td>
-                    <td>{{$data->user->name}}</td>
-                    <td>{{$data->user->email}}</td>
-                    <td>{{StatusAuthor()}}</td>
+                    <td>{{$data->title}}</td>
+                    <td>{{TeamPaper($data->team_code)}}</td>
+                    <td>{{StatusPaper($data->id)}}</td>
                     </tr>
-                    @endforeach --}}
+                    @endforeach
                 </tbody>
             </table>
         </div>

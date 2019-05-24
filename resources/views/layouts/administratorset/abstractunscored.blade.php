@@ -62,12 +62,13 @@
                         {{$data->assignedabstract[$i]->user->name}}<br>
                     @endfor
                     </td>
-                    <td class="text-center">{{StatusAbstract($data->id)}}</td>
-
+                    <td class="text-center">{{StatusPaper($data->id)}}</td>
                     <td class="text-center">
-                        <a href="{{route('abstractunscored.edit', $data->id)}}">
+                    <form action="{{route('abstractunscored.edit')}}" method="post">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$data->id}}">
                         <button type="submit" class="btn btn-accent" title="Edit Abstract"><i class="material-icons">edit</i></button>
-                        </a>
+                    </form>
                     </td>
                     </tr>
                     @endforeach

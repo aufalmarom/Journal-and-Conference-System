@@ -42,4 +42,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Model\Team', 'id_user', 'id');
     }
 
+    public function auth_info()
+    {
+        return $this->hasOne('App\Model\AuthorInfo', 'id_user', 'id');
+    }
+
 }

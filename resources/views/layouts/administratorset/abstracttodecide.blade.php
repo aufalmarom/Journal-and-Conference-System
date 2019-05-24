@@ -59,9 +59,12 @@
                             {{$data->reviewer[$i]->user->name}} <br>
                     @endfor</td>
                     <td class="text-center">
-                        <a href="{{route('formdecide.read', $data->id)}}">
+                    <form action="{{route('formdecide.read')}}" method="post">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$data->id}}">
                         <button type="submit" class="btn btn-accent" title="Decide Abstract"><i class="material-icons">send</i></button>
                         </a>
+                    </form>
                     </td>
                     </tr>
                     @endforeach

@@ -35,6 +35,15 @@ use App\Model\Submissions;
 use App\Model\Team;
 use App\Model\AssignedAbstract;
 use App\Model\AbstractScore;
+use App\Model\InvoicePaper;
+use App\Model\AbstractReview;
+use App\Model\Paper;
+use App\Model\PaperReview;
+use App\Model\PaperUnderview;
+use App\Model\PaperUnderviewReview;
+use App\Model\PaperCameraReady;
+use App\Model\Powerpoint;
+use App\Model\PublicationSubmissions;
 
 class DashboardController extends Controller
 {
@@ -73,7 +82,7 @@ class DashboardController extends Controller
             $simpan->affiliation = $post['affiliation'];
             $simpan->description = $post['description'];
             $simpan->save();
-            return back()->with('success', 'Data Berhasil Disimpan');
+            return back()->with('success', 'Data was saved');
         }else{
             $namephoto = "ava-".$post['name'].".".$photo->extension();
             $simpan->photo = $namephoto;
@@ -88,11 +97,11 @@ class DashboardController extends Controller
             $validator = Validator::make(Input::all(), $rules);
             if($photo != null){
                 if ($validator->fails()) {
-                    return back()->with('danger','Format atau ukuran photo tidak sesuai');
+                    return back()->with('danger','Format/size photo not allowed');
                 }
                 else{
                     $photo->storeAs("/public/user",$namephoto);
-                    return back()->with('success', 'Data Berhasil Disimpan');
+                    return back()->with('success', 'Data Saved Successfully');
                 }
             }
         }
@@ -114,13 +123,13 @@ class DashboardController extends Controller
                 $simpan = User::find($post['id']);
                 $simpan->password = Hash::make($post['new_password']);
                 $simpan->save();
-                return back()->with('success', 'Password Berhasil Diubah');
+                return back()->with('success', 'Password Changed');
             }else {
-                return back()->with('fail', 'Password Baru Tidak Cocok');
+                return back()->with('fail', 'New Password does not match');
             }
         }
         else{
-            return back()->with('fail', 'Password Lama Salah');
+            return back()->with('fail', 'Current Password was wrong');
         }
     }
 
@@ -180,11 +189,13 @@ class DashboardController extends Controller
         $simpan->date_to =  $to;
         $simpan->location = $post['location'];
         $simpan->overview = $post['overview'];
+        $simpan->whatsapp = $post['whatsapp'];
+        $simpan->email = $post['email'];
         $simpan->save();
         $validator = Validator::make(Input::all(), $rules);
         if($logo != null){
             if ($validator->fails()) {
-                return back()->with('danger','Format atau ukuran logo tidak sesuai');
+                return back()->with('danger','Format/size photo not allowed');
             }
             else{
                 $logolama = "storage/app/public/logo.png";
@@ -192,7 +203,7 @@ class DashboardController extends Controller
                 $logo->storeAs("public","logo.png");
             }
         }
-        return back()->with('success', 'Data Berhasil Disimpan');
+        return back()->with('success', 'Data Saved Successfully');
     }
 
     public function ReadTopics()
@@ -215,7 +226,7 @@ class DashboardController extends Controller
             $simpan->title = $post['title'][$i];
             $simpan->save();
         }
-        return back()->with('success', 'Data Berhasil Disimpan');
+        return back()->with('success', 'Data Saved Successfully');
     }
 
     public function ReadImportantDates()
@@ -248,7 +259,7 @@ class DashboardController extends Controller
             $simpan->date_from =  $from;
             $simpan->save();
         }
-        return back()->with('success', 'Data Berhasil Disimpan');
+        return back()->with('success', 'Data Saved Successfully');
     }
 
     public function ReadKeyNotes()
@@ -330,10 +341,10 @@ class DashboardController extends Controller
             }
         }
         if($gagal == ''){
-            return back()->with('success', $success.' Data Berhasil Disimpan' );
+            return back()->with('success', $success.' Data Saved Successfully' );
         }
         else{
-            return back()->with('success', $success.' Data Berhasil Disimpan')->with('danger', 'Foto Gagal Tersimpan Pada '.$gagal);
+            return back()->with('success', $success.' Data Saved Successfully')->with('danger', 'Format/size photo not allowed at '.$gagal);
         }
     }
 
@@ -358,7 +369,7 @@ class DashboardController extends Controller
             $simpan->link = $post['link'][$i];
             $simpan->save();
         }
-        return back()->with('success', 'Data Berhasil Disimpan');
+        return back()->with('success', 'Data Saved Successfully');
     }
 
     public function ReadGuidelines()
@@ -388,7 +399,7 @@ class DashboardController extends Controller
             $data->guidelines = $fileName;
             $data->save();
             $pdf->storeAs('guidelines', $fileName);
-            return back()->with('success', 'File Berhasil Diupload');
+            return back()->with('success', 'File was uploaded');
         }else{
             return back()->with('danger', 'File Gagal Diupload');
         }
@@ -414,7 +425,7 @@ class DashboardController extends Controller
             $simpan->name = $post['name'][$i];
             $simpan->save();
         }
-        return back()->with('success', 'Data Berhasil Disimpan');
+        return back()->with('success', 'Data Saved Successfully');
     }
 
     public function ReadOrganizingCommitte()
@@ -438,7 +449,7 @@ class DashboardController extends Controller
             $simpan->position = $post['position'][$i];
             $simpan->save();
         }
-        return back()->with('success', 'Data Berhasil Disimpan');
+        return back()->with('success', 'Data Saved Successfully');
     }
 
     public function ReadSponsorship()
@@ -456,7 +467,7 @@ class DashboardController extends Controller
     {
         $post = $request->request->all();
         $photo = $request->file('photo');
-        $maxSize = 100000;
+        $maxSize = 1000000;
         $gagal = '';
         $success = 0;
         $fileType=['jpg','png','jpeg'];
@@ -516,10 +527,10 @@ class DashboardController extends Controller
             }
         }
         if($gagal == ''){
-            return back()->with('success', $success.' Data Berhasil Disimpan' );
+            return back()->with('success', $success.' Data Saved Successfully' );
         }
         else{
-            return back()->with('success', $success.' Data Berhasil Disimpan')->with('danger', 'Foto Gagal Tersimpan Pada '.$gagal);
+            return back()->with('success', $success.' Data Saved Successfully')->with('danger', 'Format/size photo not allowed at '.$gagal);
         }
     }
 
@@ -758,7 +769,8 @@ class DashboardController extends Controller
     public function ReadAllPaper()
     {
         if (RoleAdministrator() == 1){
-            return view('layouts/administratorset/allpaper');
+            $datas = Submissions::get();
+            return view('layouts/administratorset/allpaper', compact('datas'));
         }
         else{
             return redirect(route('unauthorized.read'));
@@ -850,13 +862,13 @@ class DashboardController extends Controller
             $doc_proof->storeAs("public/datadiri/",$fileName);
         }
         else{
-            return back()->with('danger', 'Dokumen Data Diri Tidak Sesuai');
+            return back()->with('danger', 'Format/Size Document Personal Data not allowed');
         }
         $simpan->id_user = $post['id_user'];
         $simpan->id_author_categories = $post['id_author_categories'];
         $simpan->doc_proof = $fileName;
         $simpan->save();
-        return back()->with('success', 'Dokumen Data Diri telah diupload');
+        return back()->with('success', 'Document Personal Data was uploaded');
     }
 
     public function ConfirmID($id)
@@ -864,7 +876,7 @@ class DashboardController extends Controller
         $simpan = AuthorInfo::where('id_user', $id)->first();
         $simpan->status_verifikasi = 1;
         $simpan->save();
-        return back()->with('success', 'Data Diri telah diverifikasi');
+        return back()->with('success', 'Personal Data was verified');
     }
 
     public function ReadConfirmedID()
@@ -891,20 +903,45 @@ class DashboardController extends Controller
     public function ReadPaperPaid()
     {
         if (RoleAdministrator() == 1){
-            return view('layouts/administratorset/paperpaid');
+            $datas = InvoicePaper::where('status_payment', 1)->get();
+            return view('layouts/administratorset/paperpaid', compact('datas'));
         }else{
             return redirect(route('unauthorized.read'));
         }
     }
 
-    public function ReadAllPPT()
+    public function ReadAbstractUnreview()
     {
         if (RoleAdministrator() == 1){
-            return view('layouts/administratorset/allppt');
+            $datas = Submissions::where('status_paper', 'accept')->where('status_payment', 1)->where('date_abstract_review', NULL)->get();
+            return view('layouts/administratorset/abstractunreview', compact('datas'));
         }else{
             return redirect(route('unauthorized.read'));
         }
     }
+
+    public function ReadAbstractReview()
+    {
+        if (RoleAdministrator() == 1){
+            $datas = Submissions::where('status_paper', 'accept')->where('status_payment', 1)->where('date_abstract_review', '<>', NULL)->get();
+            return view('layouts/administratorset/abstractreview', compact('datas'));
+        }else{
+            return redirect(route('unauthorized.read'));
+        }
+    }
+
+
+
+    public function ReadAllPPT()
+    {
+        if (RoleAdministrator() == 1){
+            $datas = Powerpoint::get();
+            return view('layouts/administratorset/allppt', compact('datas'));
+        }else{
+            return redirect(route('unauthorized.read'));
+        }
+    }
+
 
     public function ReadReregistration()
     {
@@ -918,7 +955,8 @@ class DashboardController extends Controller
     public function ReadReregistrationPaper()
     {
         if (RoleAdministrator() == 1){
-            return view('layouts/administratorset/reregistrationpaper');
+            $datas = Submissions::where('status_paper', 'accept')->get();
+            return view('layouts/administratorset/reregistrationpaper', compact('datas'));
         }else{
             return redirect(route('unauthorized.read'));
         }
@@ -927,7 +965,8 @@ class DashboardController extends Controller
     public function ReadReregistrationParticipant()
     {
         if (RoleAdministrator() == 1){
-            return view('layouts/administratorset/reregistrationparticipant');
+            $datas = InvoiceParticipant::where('status', 1)->get();
+            return view('layouts/administratorset/reregistrationparticipant', compact('datas'));
         }else{
             return redirect(route('unauthorized.read'));
         }
@@ -974,10 +1013,11 @@ class DashboardController extends Controller
         }
     }
 
-    public function ReadFormSendInvoice($id)
+    public function ReadFormSendInvoice(Request $request)
     {
-        $data = InvoiceParticipant::where('id_user', $id)->first();
-        $participant = User::find($id);
+        $post = $request->request->all();
+        $data = InvoiceParticipant::where('id_user', $post['id'])->first();
+        $participant = User::find($post['id']);
         if (RoleAdministrator() == 1){
             return view('layouts/administratorset/formsendinvoice', compact('data', 'participant'));
         }
@@ -1014,7 +1054,7 @@ class DashboardController extends Controller
         $data->nominal_transfered = $post['nominal_transfered'];
         $data->save();
 
-        return back()->with('success', 'Invoice Berhasil Dikirim');
+        return back()->with('success', 'Invoice was sent');
     }
 
     public function DownloadFileProof()
@@ -1034,9 +1074,10 @@ class DashboardController extends Controller
         }
     }
 
-    public function ConfirmParticipant($id)
+    public function ConfirmParticipant(Request $request)
     {
-        $datas = InvoiceParticipant::find($id);
+        $post = $request->request->all();
+        $datas = InvoiceParticipant::find($post['id']);
         $datas->status = 1;
         $datas->save();
         return back()->with('success', 'Participant was confirmed');
@@ -1055,7 +1096,7 @@ class DashboardController extends Controller
 
     public function ExportRecapDataParticipant()
     {
-        return Excel::download(new UsersExport, 'users.xlsx');
+        return Excel::download(new UsersExport, 'participantconfirmed.xlsx');
     }
 
     public function ReadEvaluationSystem()
@@ -1146,16 +1187,16 @@ class DashboardController extends Controller
         }
     }
 
-    public function ReadAssignToReviewer($id)
+    public function ReadAssignToReviewer(Request $request)
     {
-        $data = Submissions::find($id);
+        $post = $request->request->all();
+        $data = Submissions::find($post['id']);
         $data_array = array();
         $data_array[] = $data->team_code;
-        $data_topic = Topics::find($id);
         $reviewer1 = Reviewer::leftJoin('team', 'reviewer.id_user', '=', 'team.id_user')->select('reviewer.id', 'reviewer.id_user', 'team.team_code')->whereNull('team_code')->get();
         $reviewer2 = Reviewer::leftJoin('team', 'reviewer.id_user', '=', 'team.id_user')->select('reviewer.id', 'reviewer.id_user', 'team.team_code')->whereNotNull('team_code')->whereNotIn('team_code', $data_array)->get();
         if (RoleAdministrator() == 1){
-            return view('/layouts/review/assigntoreviewer', compact('data', 'data_topic', 'reviewer1', 'reviewer2'));
+            return view('/layouts/review/assigntoreviewer', compact('data', 'reviewer1', 'reviewer2'));
         }
         else{
             return redirect(route('unauthorized.read'));
@@ -1189,14 +1230,15 @@ class DashboardController extends Controller
         }
     }
 
-    public function EditAssignToReviewer($id)
+    public function EditAssignToReviewer(Request $request)
     {
-        $data = Submissions::find($id);
+        $post = $request->request->all();
+        $data = Submissions::find($post['id']);
         $data_array = array();
         $data_array[] = $data->team_code;
-        $data_topic = Topics::find($id);
+        $data_topic = Topics::find($post['id']);
         $array_assigned = array();
-        $assigned = AssignedAbstract::where('id_paper', $id)->get();
+        $assigned = AssignedAbstract::where('id_paper', $post['id'])->get();
         for($i=0; $i < count($assigned); $i++){
             $array_assigned[] = $assigned[$i]->id_reviewer;
         }
@@ -1220,7 +1262,7 @@ class DashboardController extends Controller
             $simpan->id_reviewer = $post['reviewer'][$i];
             $simpan->save();
         }
-        return redirect(route('abstractunscored.read'));
+        return redirect(route('abstractunscored.read'))->with('success', 'Abstract was edited');
     }
 
     public function ReadSideBarSecretary()
@@ -1317,10 +1359,11 @@ class DashboardController extends Controller
         }
     }
 
-    public function ReadFormScore($id)
+    public function ReadFormScore(Request $request)
     {
+        $post = $request->request->all();
         if (RoleReviewer() == 1){
-            $data = Submissions::find($id);
+            $data = Submissions::find($post['id']);
             $criteria = Evaluation::where('label', '<>', 'recommendation')->get();
 
             $rekomendasi = Evaluation::where('label', 'recommendation')->first();
@@ -1355,7 +1398,7 @@ class DashboardController extends Controller
         $submission = Submissions::find($post['id_paper']);
         $submission->date_score = date('Y-m-d H:i:s');
         $submission->save();
-        return redirect(route('abstracttoscore.read'));
+        return redirect(route('abstracttoscore.read'))->with('success', 'Abstract was scored');
     }
 
     public function ReadAbstractToDecide()
@@ -1369,17 +1412,13 @@ class DashboardController extends Controller
         }
     }
 
-    public function ReadFormDecide($id)
+    public function ReadFormDecide(Request $request)
     {
+        $post = $request->request->all();
         if(RoleAdministrator() == 1){
-            $submission = Submissions::find($id);
-            $score = AbstractScore::where('id_paper', $id)->get();
-            $jumlah = 0;
-            foreach($score as $data){
-                $jumlah += $data->score;
-            }
-            $nilai_rekomendasi = round($jumlah/4, 0, PHP_ROUND_HALF_DOWN);
-            return view('/layouts/administratorset/formdecide', compact('submission', 'score', 'nilai_rekomendasi'));
+            $submission = Submissions::find($post['id']);
+            $reviewer = AssignedAbstract::where('id_paper', $post['id'])->get();
+            return view('/layouts/administratorset/formdecide', compact('submission', 'reviewer'));
         }
         else{
             return redirect(route('unauthorized.read'));
@@ -1392,23 +1431,179 @@ class DashboardController extends Controller
             $post = $request->request->all();
             $data = Submissions::where('id', $post['id_paper'])->first();
             $data->status_paper = $post['status_paper'];
+            $data->date_decide = date('Y-m-d H:i:s');
             $data->save();
-            return redirect(route('abstracttodecide.read'));
+            return redirect(route('abstracttodecide.read'))->with('success', 'Abstract was decided');
         }
         else{
             return redirect(route('unauthorized.read'));
         }
     }
 
-    public function ReadReviewAbstract()
+    public function ReadInvoicePaper(Request $request)
     {
-        if (RoleReviewer() == 1){
-            return view('/layouts/review/reviewabstract');
+        $post = $request->request->all();
+        if(RoleAuthor() == 1){
+            $data = InvoicePaper::where('id_paper', $post['id'])->first();
+            return view('/layouts/submission/invoicepaper', compact('data'));
         }
         else{
             return redirect(route('unauthorized.read'));
         }
     }
+
+    function PostFileProofPaper(Request $request)
+    {
+        $post = $request->request->all();
+        $file_proof = $request->file('file_proof');
+        $maxSize = 100000;
+        $fileType=['jpg','png','jpeg'];
+        $data = InvoicePaper::find($post['id']);
+
+        $fileName = "Invoice-".$post['no_invoice'].".".$file_proof->extension();
+        if($file_proof->getSize() < $maxSize && in_array($file_proof->extension(),$fileType)){
+            $file_proof->storeAs("public/invoicepaper/",$fileName);
+        }else{
+            return redirect(route('abstractsubmitted.read'))->with('danger', 'Payment File Proof Not Allowed');
+        }
+        $data->file_proof = $fileName;
+        $data->nominal_transfered = $post['nominal_transfered'];
+        $data->save();
+
+        return redirect(route('abstractsubmitted.read'))->with('success', 'Invoice was sent');
+    }
+
+    public function ReadAbstractRejected()
+    {
+        if(RoleAdministrator() == 1){
+            $datas = Submissions::where('status_paper', 'reject')->get();
+            return view('layouts/administratorset/abstractrejected', compact('datas'));
+        }
+        else{
+            return redirect(route('unauthorized.read'));
+        }
+    }
+
+    public function ReadAbstractAcceptedWaitingInvoice()
+    {
+        if(RoleAdministrator() == 1){
+            $datas = Submissions::where('date_decide', '<>', NULL)->where('date_invoice', NULL)->get();
+            return view('layouts/administratorset/abstractacceptedwaitinginvoice', compact('datas'));
+
+        }
+        else{
+            return redirect(route('unauthorized.read'));
+        }
+    }
+
+    public function ReadFormInvoicePaper(Request $request)
+    {
+        $post = $request->request->all();
+        if(RoleAdministrator() == 1){
+            $data = Submissions::find($post['id']);
+            return view('/layouts/administratorset/forminvoicepaper', compact('data'));
+        }
+        else{
+            return redirect(route('unauthorized.read'));
+        }
+    }
+
+    function PostFormInvoicePaper(Request $request)
+    {
+        $post = $request->request->all();
+        $simpan = new InvoicePaper;
+        $simpan->id_paper = $post['id'];
+        $simpan->price = $post['price'];
+        $simpan->va = $post['va'];
+        $simpan->no_invoice = RandomString();
+        $simpan->save();
+
+        $submission = Submissions::find($post['id']);
+        $submission->date_invoice = date('Y-m-d H:i:s');
+        $submission->save();
+        return redirect(route('abstractacceptedwaitinginvoice.read'))->with('success', 'Invoice was sent');
+    }
+
+    public function ReadPaperWaitingConfirmation()
+    {
+
+        if (RoleAdministrator() == 1){
+            $datas = InvoicePaper::where('file_proof', '<>', NULL)->where('status_payment', NULL)->get();
+            return view('layouts/administratorset/paperwaitingconfirmation', compact('datas'));
+        }
+        else{
+            return redirect(route('unauthorized.read'));
+        }
+    }
+
+    public function ReadPaperGotInvoiceUnpaid()
+    {
+
+        if (RoleAdministrator() == 1){
+            $datas = InvoicePaper::where('no_invoice', '<>', NULL)->where('status_payment', NULL)->get();
+            return view('layouts/administratorset/paperwgotinvoiceunpaid', compact('datas'));
+        }
+        else{
+            return redirect(route('unauthorized.read'));
+        }
+    }
+
+
+
+    public function PostIDPaperWaitingConfirmation(Request $request)
+    {
+        $post = $request->request->all();
+        $simpan = InvoicePaper::where('id_paper', $post['id'])->first();
+        $simpan->status_payment = $post['status'];
+        $simpan->save();
+
+        $submission = Submissions::where('id', $simpan->id_paper)->first();
+        $submission->status_payment = $post['status'];
+        $submission->save();
+
+        if($post['status'] == 1){
+            return back()->with('success', 'Paper was Confirmed');
+        }else{
+            return back()->with('fail', 'Paper was Rejected');
+        }
+
+    }
+
+    public function ReadReviewAbstract()
+    {
+        if (RoleReviewer() == 1){
+            $datas = Submissions::where('status_paper', 'accept')->leftjoin('assigned_abstract', 'submissions.id', '=', 'assigned_abstract.id_paper')->where('assigned_abstract.id_reviewer', Auth::user()->id)->select('submissions.*', 'assigned_abstract.id_reviewer', 'abstract_review.abstract_review')->leftjoin('abstract_review', 'abstract_review.id_reviewer', '=', 'assigned_abstract.id_reviewer')->where('abstract_review', NULL)->get();
+            return view('/layouts/review/reviewabstract', compact('datas'));
+        }
+        else{
+            return redirect(route('unauthorized.read'));
+        }
+    }
+
+    public function PostReviewAbstract(Request $request)
+    {
+        $post = $request->request->all();
+        $abstract = Submissions::find($post['id']);
+        return view('layouts/review/formreviewabstract', compact('abstract'));
+    }
+
+    public function SendReviewAbstract(Request $request)
+    {
+        $post = $request->request->all();
+        $simpan = new AbstractReview();
+        $simpan->id_paper = $post['id'];
+        $simpan->id_reviewer = Auth::user()->id;
+        $simpan->abstract_review = $post['ck_input'];
+        $simpan->comments = $post['comments'];
+        $simpan->save();
+
+        $submission = Submissions::find($post['id']);
+        $submission->date_abstract_review = date('Y-m-d H:i:s');
+        $submission->save();
+
+        return redirect(route('reviewabstract.read'))->with('success', 'Abstract was reviewed');
+    }
+
 
     public function ReadReviewAbstractReviewed()
     {
@@ -1433,27 +1628,102 @@ class DashboardController extends Controller
     public function ReadReviewFullPaper()
     {
         if (RoleReviewer() == 1){
-            return view('/layouts/review/reviewfullpaper');
+            $datas = Submissions::where('status_paper', 'accept')->where('status_payment', 1)->where('date_after_review', '<>', NULL)->where('date_abstract_review_revision', '<>', NULL)->where('date_abstract_final', '<>', NULL)->where('date_presentation', '<>', NULL)->where('date_decide_presentation', '<>', NULL)->where('date_paper', '<>', NULL)->where('date_paper_review', NULL)->where('date_paper_underview', NULL)->where('date_paper_underview_review', NULL)->where('date_paper_camera_ready', NULL)->get();
+            return view('/layouts/review/reviewfullpaper', compact('datas'));
         }
         else{
             return redirect(route('unauthorized.read'));
         }
     }
 
+    public function FormReviewFullPaper(Request $request)
+    {
+        $post = $request->request->all();
+        $paper = Paper::where('id_paper', $post['id_paper'])->first();
+        return view('layouts/administratorset/formreviewfullpaper', compact('paper'));
+    }
+
+    public function PostReviewFullPaper(Request $request)
+    {
+        $post = $request->request->all();
+        $file = $request->file('file');
+        $maxSize = 5000000;
+        $fileType = ['docx', 'doc'];
+        $data = new PaperReview();
+        $explode = explode(" ",$post['title']);
+        $title = $explode[0]." ".$explode[1]." ".$explode[2];
+        $fileName = $post['topic']."-".$post['id_paper']."-".$title.".".$file->extension();
+        if($file->getSize() < $maxSize && in_array($file->extension(), $fileType)){
+            $file->storeAs("public/paperreview/",$fileName);
+        }else{
+            return redirect(route('reviewfullpaper.read'))->with('danger', 'File Paper Review failed to upload');
+        }
+        $data->file = $fileName;
+        $data->id_paper = $post['id_paper'];
+        $data->id_reviewer = Auth::user()->id;
+        $data->comments = $post['comments'];
+        $data->save();
+
+        $sub = Submissions::find($post['id_paper']);
+        $sub->date_paper_review = date('Y-m-d H:i:s');
+        $sub->save();
+
+        return redirect(route('reviewfullpaper.read'))->with('success', 'Full Paper was Uploaded');
+    }
+
+
+
     public function ReadReviewFullPaperUnderview()
     {
         if (RoleReviewer() == 1){
-            return view('/layouts/review/reviewfullpaperunderview');
+            $datas = Submissions::where('status_paper', 'accept')->where('status_payment', 1)->where('date_after_review', '<>', NULL)->where('date_abstract_review_revision', '<>', NULL)->where('date_abstract_final', '<>', NULL)->where('date_presentation', '<>', NULL)->where('date_decide_presentation', '<>', NULL)->where('date_paper', '<>', NULL)->where('date_paper_review', '<>', NULL)->where('date_paper_underview', '<>', NULL)->where('date_paper_underview_review', NULL)->where('date_paper_camera_ready', NULL)->get();
+            return view('/layouts/review/reviewfullpaperunderview', compact('datas'));
         }
         else{
             return redirect(route('unauthorized.read'));
         }
+    }
+
+    public function FormReviewFullPaperUnderview(Request $request)
+    {
+        $post = $request->request->all();
+        $paper = PaperUnderview::where('id_paper', $post['id_paper'])->first();
+        return view('layouts/administratorset/formreviewfullpaperunderview', compact('paper'));
+    }
+
+    public function PostReviewFullPaperUnderview(Request $request)
+    {
+        $post = $request->request->all();
+        $file = $request->file('file');
+        $maxSize = 5000000;
+        $fileType = ['docx', 'doc'];
+        $data = new PaperUnderviewReview();
+        $explode = explode(" ",$post['title']);
+        $title = $explode[0]." ".$explode[1]." ".$explode[2];
+        $fileName = $post['topic']."-".$post['id_paper']."-".$title.".".$file->extension();
+        if($file->getSize() < $maxSize && in_array($file->extension(), $fileType)){
+            $file->storeAs("public/paperunderviewreview/",$fileName);
+        }else{
+            return redirect(route('reviewfullpaperunderview.read'))->with('danger', 'File Paper Underview Reviewed failed to upload');
+        }
+        $data->file = $fileName;
+        $data->id_paper = $post['id_paper'];
+        $data->id_reviewer = Auth::user()->id;
+        $data->comments = $post['comments'];
+        $data->save();
+
+        $sub = Submissions::find($post['id_paper']);
+        $sub->date_paper_underview_review = date('Y-m-d H:i:s');
+        $sub->save();
+
+        return redirect(route('reviewfullpaperunderview.read'))->with('success', 'Full Paper  Underview Review was Uploaded');
     }
 
     public function ReadReviewFullPaperCameraReady()
     {
             if (RoleReviewer() == 1){
-                return view('/layouts/review/reviewfullpapercameraready');
+                $datas = Submissions::where('status_paper', 'accept')->where('status_payment', 1)->where('date_after_review', '<>', NULL)->where('date_abstract_review_revision', '<>', NULL)->where('date_abstract_final', '<>', NULL)->where('date_presentation', '<>', NULL)->where('date_decide_presentation', '<>', NULL)->where('date_paper', '<>', NULL)->where('date_paper_review', '<>', NULL)->where('date_paper_underview', '<>', NULL)->where('date_paper_underview_review','<>', NULL)->where('date_paper_camera_ready', '<>', NULL)->get();
+                return view('/layouts/review/reviewfullpapercameraready', compact('datas'));
             }
             else{
                 return redirect(route('unauthorized.read'));
@@ -1476,8 +1746,14 @@ class DashboardController extends Controller
     public function ReadSubmission()
     {
         if (RoleAuthor() == 1){
+            if(@Auth::user()->auth_info->id_user == NULL){
+                return redirect(route('authorid.verifikasi'));
+            }elseif(Auth::user()->auth_info->status_verifikasi == NULL){
+                return redirect(route('dashboard'));
+            }
             $data_topics = Topics::get();
-            return view('layouts/submission/submission', compact('data_topics'));
+            $data_publication = PublicationSubmissions::get();
+            return view('layouts/submission/submission', compact('data_topics', 'data_publication'));
         }
         else{
             return redirect(route('unauthorized.read'));
@@ -1534,6 +1810,7 @@ class DashboardController extends Controller
         $submission->team_code = $team_code;
         $submission->title = $post['title'];
         $submission->topic = $post['topic'];
+        $submission->publication = $post['publication'];
         $submission->presentation = $post['presentation'];
         $submission->keywords = $post['keywords'];
         $submission->abstract = $post['ck_input'];
@@ -1551,7 +1828,7 @@ class DashboardController extends Controller
         $first_author_team->team_code = $team_code;
         $first_author_team->save();
 
-        return redirect(route('abstractsubmitted.read'));
+        return redirect(route('abstractsubmitted.read'))->with('success', 'Abstract was submitted');
     }
 
     public function ReadAbstractSubmitted()
@@ -1564,7 +1841,6 @@ class DashboardController extends Controller
         $datas = Submissions::whereIn('team_code', $array_team)->get();
 
         if (RoleAuthor() == 1){
-            $data_topics = Topics::get();
             return view('layouts/submission/submitted', compact('datas'));
         }
         else{
@@ -1572,9 +1848,10 @@ class DashboardController extends Controller
         }
     }
 
-    public function EditAbstractSubmitted($id)
+    public function EditAbstractSubmitted(Request $request)
     {
-        $data = Submissions::find($id);
+        $post = $request->request->all();
+        $data = Submissions::find($post['id']);
         $data_topics = Topics::get();
         if(in_array($data->team_code, ArrayTeam())){
             if (RoleAuthor() == 1){
@@ -1651,7 +1928,7 @@ class DashboardController extends Controller
         $simpan->no_invoice = RandomString();
         $simpan->expired_at = date("Y-m-d H:i:s");;
         $simpan->save();
-        return back()->with('success', 'Invoice Berhasil Dikirim');
+        return redirect(route('participant.verifiedwaitinginvoice'))->with('success', 'Invoice was sent');
     }
 
     function ReadLogActivityParticipant(){

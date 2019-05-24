@@ -6,7 +6,7 @@
     <div class="page-header row no-gutters py-4">
         <div class="col-12 col-sm-8 text-center text-sm-left mb-0">
         <span class="text-uppercase page-subtitle">Dashboard</span>
-        <h3 class="page-title">List Participant</h3>
+        <h3 class="page-title">Participant Paid & Waiting Confirmation</h3>
         </div>
     </div>
     <!-- End Page Header -->
@@ -14,6 +14,14 @@
     <div class="row">
         <div class="col">
             <a class="btn btn-accent" href="{{route('sidebarparticipant')}}"><i class="material-icons">keyboard_arrow_left</i> Back</a>
+        </div>
+    </div>
+    <br>
+
+
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-accent" href="{{route('sidebarfinance')}}"><i class="material-icons">keyboard_arrow_left</i> Back to Finance</a>
         </div>
     </div>
     <br>
@@ -33,6 +41,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>ID User</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th class="text-center">Price Must Pay</th>
@@ -45,17 +54,20 @@
                     @foreach ($datas as $data)
                     <tr>
                     <td></td>
+                    <td>{{$data->user->id}}</td>
                     <td>{{$data->user->name}}</td>
                     <td>{{$data->user->email}}</td>
-                    <td class="text-center">Rp. {{$data->price}},-</td>
-                    <td class="text-center">Rp. {{$data->nominal_transfered}},-</td>
+                    <td class="text-center">{{Rupiah($data->price)}},-</td>
+                    <td class="text-center">{{Rupiah($data->nominal_transfered)}},-</td>
                     <td class="text-center"><img style="width:40px; height:40px; text-align:center; vertical-align:middle" data-pic-title="{{$data->file_proof}}" data-pic="storage/app/public/invoice/{{$data->file_proof}}" src="storage/app/public/invoice/{{$data->file_proof}}"></td>
                     <td class="td-actions text-center">
-                        <a href="{{route('participant.confirm', $data->id)}}">
-                            <button type="submit" name="status" title="Pembayaran Diterima" class="btn btn-md btn-link">
-                                <i class="material-icons">message</i>
-                            </button>
-                        </a>
+                    <form method="POST" action="{{route('participant.confirm')}}">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$data->id}}">
+                        <button type="submit" title="Pembayaran Diterima" class="btn btn-md btn-accent">
+                            <i class="material-icons">message</i>
+                        </button>
+                    </form>
                     </td>
                     </tr>
                     @endforeach

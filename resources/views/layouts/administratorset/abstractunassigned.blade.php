@@ -54,12 +54,14 @@
                     <td>
                             {{TeamPaper($data->team_code)}}
                         </td>
-                    <td class="text-center">{{StatusAbstract($data->id)}}</td>
+                    <td class="text-center">{{StatusPaper($data->id)}}</td>
 
                     <td class="text-center">
-                        <a href="{{route('assigntoreviewer.read', $data->id)}}">
+                    <form action="{{route('assigntoreviewer.read')}}" method="post">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$data->id}}">
                         <button type="submit" class="btn btn-accent" title="Assigned Abstract"><i class="material-icons">send</i></button>
-                        </a>
+                    </form>
                     </td>
                     </tr>
                     @endforeach

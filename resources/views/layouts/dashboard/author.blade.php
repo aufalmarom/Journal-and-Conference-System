@@ -49,7 +49,6 @@
                 <div class="card card-small">
                 <div class="card-header border-bottom">
                 <h6 class="m-0">Please waiting verification your personal data from Administrator</h6>
-
                 </div>
                 </div>
             </div>
@@ -94,7 +93,7 @@
                 <li class="list-group-item d-flex px-3">
                     @for ($i = 0; $i < count(Auth::user()->team); $i++)
                         <span class="text-semibold text-fiord-blue">{{Auth::user()->team[$i]->paper->title}}</span>
-                        <span class="ml-auto text-right text-semibold text-reagent-gray">{{StatusAbstract(Auth::user()->team[$i]->paper->id)}}</span>
+                        <span class="ml-auto text-right text-semibold text-reagent-gray">{{StatusPaper(Auth::user()->team[$i]->paper->id)}}</span>
                     @endfor
                 </li>
                 </ul>

@@ -27,7 +27,7 @@
     </div>
     @endif
 
-    @if ($message = Session::get('fail'))
+    @if ($message = Session::get('danger'))
     <div class="alert alert-fail alert-dismissible fade show" role="alert">
         <strong>{{$message}}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -43,34 +43,38 @@
                         <tr>
                             <th>No</th>
                             <th>Title</th>
-                            <th class="text-center">Status</th>
+                            <th>Topics</th>
+                            <th class="text-center">Full Paper Underview</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($datas as $data)
+                        @foreach ($datas as $data)
                         <tr>
                         <td></td>
-                        <td>{{$data->name}}</td>
-                        <td>{{$data->email}}</td>
-                        <td class="text-center">{{StatusAllReviewer($data->id)}}</td>
-                        <form method="POST" action="{{route('reviewer.delete')}}">
+                        <td>{{$data->title}}</td>
+                        <td>{{$data->topics->title}}</td>
+                        @for ($i = 0; $i < count($data->paperunderview); $i++)
+                        @if ($data->id == $data->paperunderview[$i]->id_paper)
+                        <td class="text-center">
+                            <a class="btn btn-accent" title="Download Full Paper Underview" href="{{route('downloadpaperunderview', $data->paperunderview[$i]->id_paper)}}"><i class="material-icons">archive</i></a>
+                        </td>
+                        @endif
+                        @endfor
+                        <form method="POST" action="{{route('reviewfullpaperunderview.form')}}">
                                 @csrf
                             <td class="text-center">
-                                <input  type="hidden" name="id" value="{{$data->id}}">
-                                <button type="submit" class="btn btn-danger" title="Delete Reviewer"><i class="material-icons">delete</i></button>
+                                <input  type="hidden" name="id_paper" value="{{$data->id}}">
+                                <button type="submit" class="btn btn-accent" title="Review "><i class="material-icons">edit</i></button>
                             </td>
                         </form>
                         </tr>
-                        @endforeach --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
         <br>
-
-
-
 
 
 @endsection

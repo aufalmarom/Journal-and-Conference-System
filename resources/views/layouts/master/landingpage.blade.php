@@ -105,15 +105,15 @@
             @php
                 $nomor_row = 3;
             @endphp
-            @foreach ($data1 as $data)
+            @foreach ($data1 as $item)
             @if ($nomor_row % 3 == 0)
             <div class="row">
             @endif
                     <div class="feature py-4 col-md-4 d-flex">
-                    <div class="icon text-primary mr-3"><i class="{{$data->favicon}}"></i></div>
+                    <div class="icon text-primary mr-3"><i class="{{$item->favicon}}"></i></div>
                     <div class="px-4 text-left">
                         <br>
-                        <h5>{{$data->title}}</h5>
+                        <h5>{{$item->title}}</h5>
                     </div>
                     </div>
             @if (count($data1) % 3 != 0 && $nomor_row == count($data1) + 2)
@@ -140,12 +140,12 @@
                     <div class="app-features-wrapper col-lg-4 col-md-6 col-sm-12 py-5 mx-auto">
                         <div class="container">
                         <h3 class="section-title text-center my-5">Important Dates</h3>
-                        @foreach ($data2 as $data)
+                        @foreach ($data2 as $item)
                             <div class="feature py-1 d-flex">
-                                <div class="icon text-white bg-success mr-5"><i class="{{$data->favicon}}"></i></div>
+                                <div class="icon text-white bg-success mr-5"><i class="{{$item->favicon}}"></i></div>
                                 <div>
-                                    <h5>{{$data->title}}</h5>
-                                    <p>{{date('Y',strtotime($data->date_from))}}, {{RangeDateImportantDate($data->id)}}</p>
+                                    <h5>{{$item->title}}</h5>
+                                    <p>{{date('Y',strtotime($item->date_from))}}, {{RangeDateImportantDate($item->id)}}</p>
                                 </div>
                             </div>
                         @endforeach
@@ -164,15 +164,15 @@
                 @php
                     $row = 3;
                 @endphp
-                @foreach ($data3 as $data)
+                @foreach ($data3 as $item)
                 @if ($row % 3 == 0)
                     <div class="row">
                     @endif
                         <div class="col-md-4 testimonial text-center">
                             <div class="avatar rounded-circle with-shadows mb-3 ml-auto mr-auto">
-                                <img src="storage/app/public/keynotes/{{$data->photo}}" class="w-100" alt="Avatar" />
+                                <img src="storage/app/public/keynotes/{{$item->photo}}" class="w-100" alt="Avatar" />
                             </div>
-                            <h5 class="mb-1">{{$data->name}}</h5>
+                            <h5 class="mb-1">{{$item->name}}</h5>
                             <span class="text-muted d-block mb-2">{{$data->sector}}</span>
                             <p>{{$data->description}}</p>
                         </div>
@@ -196,7 +196,7 @@
             <h3 class="section-title text-center text-white m-5">Guidelines</h3>
             <p class="text-muted col-md-6 text-center mx-auto">Download this guidelines to explain your curious</p>
             <form class="form-inline d-table mb-5 mx-auto">
-                <button class="btn btn-primary mb-2" onClick="getFile();">Download Guidelines</button>
+                <a href="https://drive.google.com/open?id=1a23zIMDeeSEnLtyOzx0j4BLGO2UIZ6eB" class="btn btn-primary mb-2">Download Guidelines</a>
             </form>
         </div>
 
@@ -227,12 +227,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data9 as $data)
+                            @foreach ($data9 as $item)
                             <tr>
-                                <td>{{$data->category}}</td>
-                                <td class="text-center">{{$data->early_bird}}</td>
-                                <td class="text-center">{{$data->regular}}</td>
-                                <td class="text-center">{{$data->on_site}}</td>
+                                <td>{{$item->category}}</td>
+                                <td class="text-center">{{$item->early_bird}}</td>
+                                <td class="text-center">{{$item->regular}}</td>
+                                <td class="text-center">{{$item->on_site}}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -250,8 +250,8 @@
                 <div class="row justify-content-md-center">
                     <div class="col-sm-9">
                         <p class="text-center"> The article presented at ICTCRED will be published in the proceedings of the <b><a href="https://iopscience.iop.org/journal/1755-1315">Institute of Physics (IOP)</a></b> and published at
-                            @foreach ($data4 as $data)
-                            <b><a href="{{$data->link}}">{{$data->name}}</a></b>
+                            @foreach ($data4 as $item)
+                            <b><a href="{{$item->link}}">{{$item->name}}</a></b>
                             @endforeach
                         </p>
                     </div>
@@ -268,8 +268,8 @@
                     <div class="col-lg-6 mb-4">
                         <div class="row text-center">
                             <div class="col-sm-12 text-center">
-                                @foreach ($data5 as $data)
-                                    <li class="list-group-item">{{$data->name}}</li>
+                                @foreach ($data5 as $item)
+                                    <li class="list-group-item">{{$item->name}}</li>
                                 @endforeach
                             </div>
                         </div>
@@ -291,11 +291,11 @@
                             <li class="list-group-item p-3">
                             <div class="row">
                                 <div class="col-sm-12 col-md-12">
-                                    @foreach ($data6 as $data)
+                                    @foreach ($data6 as $item)
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="form-group text-center">
-                                                <h6 class="text-muted d-block mb-2">{{$data->position}} : {{$data->name}}</h6>
+                                                <h6 class="text-muted d-block mb-2">{{$item->position}} : {{$item->name}}</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -320,12 +320,12 @@
                     $row = 3;
                 @endphp
 
-                @foreach ($data7 as $data)
+                @foreach ($data7 as $item)
                 @if ($row % 3 == 0)
                     <div class="row">
                 @endif
                     <div class="col-md-4 testimonial text-center">
-                        <img src="storage/app/public/sponsorship/{{$data->photo}}" alt="publication-{{$data->id}}"/>
+                        <img src="storage/app/public/sponsorship/{{$item->photo}}" alt="publication-{{$item->id}}"/>
                     </div>
                 @if (count($data7) % 3 != 0 && $row == count($data7) + 2)
                 </div>
@@ -360,15 +360,15 @@
             <h3 class="section-title text-center m-5">Frequently Asked & Questions</h3>
 
             <div class="container py-5">
-                @foreach ($data8 as $data)
+                @foreach ($data8 as $item)
                     <ul class="list-group">
                         <style type="text/css">
                             .liop{
                                 opacity: .8;
                             }
                         </style>
-                        <li class="list-group-item active liop">{{$data->question}}</li>
-                        <li class="list-group-item">{{$data->answer}}</li>
+                        <li class="list-group-item active liop">{{$item->question}}</li>
+                        <li class="list-group-item">{{$item->answer}}</li>
                     </ul>
                     <br>
                 @endforeach
@@ -387,6 +387,8 @@
         <div id="contact-us" class="contact section-invert py-4">
             <h3 class="section-title text-center m-5">Contact Us</h3>
             <div class="container py-4">
+
+                    <p class="text-center">Hotline : {{$data->whatsapp}} (WA Only) / Email : {{$data->email}}</p>
                 <div class="row justify-content-md-center px-4">
                 <div class="contact-form col-sm-12 col-md-10 col-lg-7 p-4 mb-4 card">
                     <form method="POST" action="{{route('contactus.create')}}">

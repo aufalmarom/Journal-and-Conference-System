@@ -84,6 +84,13 @@
                             <strong class="text-muted d-block mb-2">Overview</strong>
                             <input type="text" name="overview" class="form-control" placeholder="Overview" value="{{$data->overview}}" required>
                         </div>
+                        <div class="form-group">
+                            <strong class="text-muted d-block mb-2">Hotline Whatsapp</strong>
+                            <input type="text" name="whatsapp" class="form-control" placeholder="Hotline Whatsapp" value="{{$data->whatsapp}}" required>
+                        </div><div class="form-group">
+                            <strong class="text-muted d-block mb-2">Hotline Email</strong>
+                            <input type="text" name="email" class="form-control" placeholder="Hotline Email" value="{{$data->email}}" required>
+                        </div>
                         <button type="submit" class="mb-2 btn btn-primary mr-2">Save</button>
                     </form>
                   </div>

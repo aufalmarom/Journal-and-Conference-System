@@ -21,7 +21,6 @@ class LandingPageController extends Controller
     public function ReadLandingPage()
     {
         $data = Welcome::first();
-
         $data1 = Topics::get();
         $data2 = ImportantDates::get();
         $data3 = KeyNotes::get();

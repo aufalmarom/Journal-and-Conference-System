@@ -61,6 +61,20 @@
             </div>
         </div>
     </div>
+    <div class="col-lg col-md-6 col-sm-6 mb-4">
+        <div class="stats-small stats-small--1 card card-small">
+            <div class="card-body p-0 d-flex">
+            <div class="d-flex flex-column m-auto">
+                <div class="stats-small__data text-center">
+                    <a href="{{route('abstractrejected.read')}}">
+                        <span class="stats-small__label text-uppercase">paper rejected</span>
+                        <h6 class="stats-small__value count my-3">{{CountAbstractRejected()}}</h6>
+                    </a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row">
@@ -69,9 +83,9 @@
             <div class="card-body p-0 d-flex">
             <div class="d-flex flex-column m-auto">
                 <div class="stats-small__data text-center">
-                    <a href="{{route('paper.unpaid')}}">
-                        <span class="stats-small__label text-uppercase">paper rejected</span>
-                        <h6 class="stats-small__value count my-3">-</h6>
+                    <a href="{{route('abstractacceptedwaitinginvoice.read')}}">
+                        <span class="stats-small__label text-uppercase">paper accepted & waiting invoice</span>
+                        <h6 class="stats-small__value count my-3">{{CountAbstractAcceptedWaitingInvoice()}}</h6>
                     </a>
                 </div>
             </div>
@@ -83,9 +97,9 @@
             <div class="card-body p-0 d-flex">
             <div class="d-flex flex-column m-auto">
                 <div class="stats-small__data text-center">
-                    <a href="{{route('paper.unpaid')}}">
-                        <span class="stats-small__label text-uppercase">paper accepted && waiting invoice</span>
-                        <h6 class="stats-small__value count my-3">-</h6>
+                    <a href="{{route('papergotinvoiceunpaid.read')}}">
+                        <span class="stats-small__label text-uppercase">paper got invoice & unpaid</span>
+                        <h6 class="stats-small__value count my-3">{{CountAbstractGotInvoiceUnpaid()}}</h6>
                     </a>
                 </div>
             </div>
@@ -97,9 +111,9 @@
             <div class="card-body p-0 d-flex">
             <div class="d-flex flex-column m-auto">
                 <div class="stats-small__data text-center">
-                    <a href="{{route('paper.paid')}}">
+                    <a href="{{route('paperwaitingconfirmation.read')}}">
                         <span class="stats-small__label text-uppercase">paper waiting confirm</span>
-                        <h6 class="stats-small__value count my-3">-</h6>
+                        <h6 class="stats-small__value count my-3">{{CountPaperWaitingConfirm()}}</h6>
                     </a>
                 </div>
             </div>
@@ -113,7 +127,7 @@
                 <div class="stats-small__data text-center">
                     <a href="{{route('paper.paid')}}">
                         <span class="stats-small__label text-uppercase">paper paid</span>
-                        <h6 class="stats-small__value count my-3">-</h6>
+                        <h6 class="stats-small__value count my-3">{{CountPaperPaid()}}</h6>
                     </a>
                 </div>
             </div>
@@ -129,9 +143,9 @@
             <div class="card-body p-0 d-flex">
             <div class="d-flex flex-column m-auto">
                 <div class="stats-small__data text-center">
-                    <a href="{{route('paper.unpaid')}}">
+                    <a href="{{route('abstractunreview.read')}}">
                         <span class="stats-small__label text-uppercase">abstract unreview</span>
-                        <h6 class="stats-small__value count my-3">-</h6>
+                        <h6 class="stats-small__value count my-3">{{CountAbstractUnreview()}}</h6>
                     </a>
                 </div>
             </div>
@@ -143,9 +157,9 @@
             <div class="card-body p-0 d-flex">
             <div class="d-flex flex-column m-auto">
                 <div class="stats-small__data text-center">
-                    <a href="{{route('paper.unpaid')}}">
+                    <a href="{{route('abstractreview.read')}}">
                         <span class="stats-small__label text-uppercase">abstract review</span>
-                        <h6 class="stats-small__value count my-3">-</h6>
+                        <h6 class="stats-small__value count my-3">{{CountAbstractReview()}}</h6>
                     </a>
                 </div>
             </div>
@@ -157,9 +171,9 @@
             <div class="card-body p-0 d-flex">
             <div class="d-flex flex-column m-auto">
                 <div class="stats-small__data text-center">
-                    <a href="{{route('lp.read')}}">
+                    <a href="{{route('abstractreviewedunreview.read')}}">
                         <span class="stats-small__label text-uppercase">abstract reviewed unreview</span>
-                        <h6 class="stats-small__value count my-3">-</h6>
+                        <h6 class="stats-small__value count my-3">{{CountAbstractReviewedUnreview()}}</h6>
                     </a>
                 </div>
             </div>
@@ -171,23 +185,9 @@
             <div class="card-body p-0 d-flex">
             <div class="d-flex flex-column m-auto">
                 <div class="stats-small__data text-center">
-                    <a href="{{route('lp.read')}}">
-                        <span class="stats-small__label text-uppercase">abstract reviewed reviewed</span>
-                        <h6 class="stats-small__value count my-3">-</h6>
-                    </a>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg col-md-6 col-sm-6 mb-4">
-        <div class="stats-small stats-small--1 card card-small">
-            <div class="card-body p-0 d-flex">
-            <div class="d-flex flex-column m-auto">
-                <div class="stats-small__data text-center">
-                    <a href="{{route('lp.read')}}">
-                        <span class="stats-small__label text-uppercase">abstract final</span>
-                        <h6 class="stats-small__value count my-3">-</h6>
+                    <a href="{{route('abstractreviewedreview.read')}}">
+                        <span class="stats-small__label text-uppercase">abstract reviewed after reviewed</span>
+                        <h6 class="stats-small__value count my-3">{{CountAbstractReviewedReview()}}</h6>
                     </a>
                 </div>
             </div>
@@ -202,23 +202,68 @@
             <div class="card-body p-0 d-flex">
             <div class="d-flex flex-column m-auto">
                 <div class="stats-small__data text-center">
-                    <a href="{{route('lp.read')}}">
+                    <a href="{{route('abstractfinalundecidereviewer.read')}}">
+                        <span class="stats-small__label text-uppercase">abstract final undecide reviewer</span>
+                        <h6 class="stats-small__value count my-3">{{CountAbstractFinalUndecideReviewer()}}</h6>
+                    </a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg col-md-6 col-sm-6 mb-4">
+        <div class="stats-small stats-small--1 card card-small">
+            <div class="card-body p-0 d-flex">
+            <div class="d-flex flex-column m-auto">
+                <div class="stats-small__data text-center">
+                    <a href="{{route('abstractfinalundecideadministrator.read')}}">
+                        <span class="stats-small__label text-uppercase">abstract final undecide administrator</span>
+                        <h6 class="stats-small__value count my-3">{{CountAbstractFinalUndecideAdministrator()}}</h6>
+                    </a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg col-md-6 col-sm-6 mb-4">
+        <div class="stats-small stats-small--1 card card-small">
+            <div class="card-body p-0 d-flex">
+            <div class="d-flex flex-column m-auto">
+                <div class="stats-small__data text-center">
+                    <a href="{{route('abstractfinaldecided.read')}}">
+                        <span class="stats-small__label text-uppercase">abstract final decided</span>
+                        <h6 class="stats-small__value count my-3">{{CountAbstractFinalDecided()}}</h6>
+                    </a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg col-md-6 col-sm-6 mb-4">
+        <div class="stats-small stats-small--1 card card-small">
+            <div class="card-body p-0 d-flex">
+            <div class="d-flex flex-column m-auto">
+                <div class="stats-small__data text-center">
+                    <a href="{{route('paperunreview.read')}}">
                         <span class="stats-small__label text-uppercase">paper unreview</span>
-                        <h6 class="stats-small__value count my-3">-</h6>
+                        <h6 class="stats-small__value count my-3">{{CountPaperUnreview()}}</h6>
                     </a>
                 </div>
             </div>
             </div>
         </div>
     </div>
+</div>
+
+<div class="row">
     <div class="col-lg col-md-6 col-sm-6 mb-4">
         <div class="stats-small stats-small--1 card card-small">
             <div class="card-body p-0 d-flex">
             <div class="d-flex flex-column m-auto">
                 <div class="stats-small__data text-center">
-                    <a href="{{route('lp.read')}}">
+                    <a href="{{route('paperreviewed.read')}}">
                         <span class="stats-small__label text-uppercase">paper reviewed</span>
-                        <h6 class="stats-small__value count my-3">-</h6>
+                        <h6 class="stats-small__value count my-3">{{CountPaperReviewed()}}</h6>
                     </a>
                 </div>
             </div>
@@ -230,9 +275,9 @@
             <div class="card-body p-0 d-flex">
             <div class="d-flex flex-column m-auto">
                 <div class="stats-small__data text-center">
-                    <a href="{{route('lp.read')}}">
+                    <a href="{{route('paperunderviewunreview.read')}}">
                         <span class="stats-small__label text-uppercase">paper underview unreview</span>
-                        <h6 class="stats-small__value count my-3">-</h6>
+                        <h6 class="stats-small__value count my-3">{{CountPaperUnderviewUnreview()}}</h6>
                     </a>
                 </div>
             </div>
@@ -244,9 +289,9 @@
             <div class="card-body p-0 d-flex">
             <div class="d-flex flex-column m-auto">
                 <div class="stats-small__data text-center">
-                    <a href="{{route('lp.read')}}">
-                        <span class="stats-small__label text-uppercase">paper underview review</span>
-                        <h6 class="stats-small__value count my-3">-</h6>
+                    <a href="{{route('paperunderviewreviewed.read')}}">
+                        <span class="stats-small__label text-uppercase">paper underview reviewed</span>
+                        <h6 class="stats-small__value count my-3">{{CountPaperUnderviewReviewed()}}</h6>
                     </a>
                 </div>
             </div>
@@ -258,9 +303,9 @@
             <div class="card-body p-0 d-flex">
             <div class="d-flex flex-column m-auto">
                 <div class="stats-small__data text-center">
-                    <a href="{{route('lp.read')}}">
+                    <a href="{{route('papercameraready.read')}}">
                         <span class="stats-small__label text-uppercase">paper camera ready</span>
-                        <h6 class="stats-small__value count my-3">-</h6>
+                        <h6 class="stats-small__value count my-3">{{CountPaperCameraReady()}}</h6>
                     </a>
                 </div>
             </div>

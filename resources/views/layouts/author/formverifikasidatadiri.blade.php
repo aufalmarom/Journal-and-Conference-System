@@ -52,12 +52,15 @@
                                     </select>
                                 </div>
                             </div>
-                                    <label>Upload Document Proof(ID Card/KTP/KTM)</label>
+                                <label>Upload Document Proof(ID Card/KTP/KTM)</label>
                                 <div class="form-group custom-file">
                                     <input type="file" name="doc_proof" class="custom-file-input" required>
-                                    <label class="custom-file-label" for="validatedCustomFile">{{$data->doc_proof}}</label>
+                                    <label class="custom-file-label"">{{$data->doc_proof}}</label>
+                                    <p class="text-small">Overseas Participant : Passport</p>
+                                    <p class="text-small">General Participant : KTP</p>
+                                    <p class="text-small">Undergraduate Participant : KTM</p>
+                                    <p class="text-small">format file : .jpg, .jpeg, max size : 1 MB</p>
                                 </div>
-
                             <button type="submit" class="btn btn-accent">Send</button>
                         </form>
                         </div>
@@ -67,7 +70,7 @@
                 </div>
             </div>
         </div>
-    @else
+    @elseif(CekStatusVerifikasiAuthorInfo() == NULL)
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
             <div class="card card-small">
@@ -77,6 +80,24 @@
             </div>
         </div>
     </div>
+    @elseif(CekStatusVerifikasiAuthorInfo() != NULL)
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
+            <div class="card card-small">
+            <div class="card-header border-bottom">
+            <h6 class="m-0">Personal Data was verified</h6>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-accent" href="{{route('dashboard')}}"><i class="material-icons">keyboard_arrow_left</i> Back to Dashboard</a>
+        </div>
+    </div>
+    <br>
+
     @endif
 
 

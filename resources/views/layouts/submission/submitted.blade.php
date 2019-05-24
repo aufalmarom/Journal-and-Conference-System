@@ -53,22 +53,52 @@
                     <td>{{$data->title}}</td>
                     <td>
                     @for ($i = 0; $i < count($data->team); $i++)
-                        {{$data->team[$i]->user->name}}<br>
+                        {{@$data->team[$i]->user->name}}<br>
                     @endfor
                     </td>
-                    <td class="text-center">{{StatusAbstract($data->id)}}</td>
-
+                    <td class="text-center">{{StatusPaper($data->id)}}</td>
+                    @if (StatusPaper($data->id) == 'Rejected')
                     <td class="text-center">
-                        <a href="{{route('abstractsubmitted.edit', $data->id)}}">
+                        -
+                    </td>
+                    @elseif(StatusPaper($data->id) == 'Accepted')
+                    <td class="text-center">
+                        @if (@$data->invoicepaper->status_payment == NULL)
+                        <p>Finish paper payment!</p>
+                        @else
+                        <p>Save Payment!</p>
+                        @endif
+                        <form action="{{route('invoicepaper')}}" method="post">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$data->id}}">
+                            <button type="submit" class="btn btn-accent" title="Invoice"><i class="material-icons">payment</i></button>
+                        </form>
+                    </td>
+                    @elseif($data->date_decide == NULL)
+                    <td class="text-center">
+                        -
+                    </td>
+                    @elseif($data->date_invoice == NULL)
+                    <td class="text-center">
+                        -
+                    </td>
+                    @else
+                    <td class="text-center">
+                        <form method="POST" action="{{route('abstractsubmitted.edit')}}">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$data->id}}">
                         <button type="submit" class="btn btn-accent" title="Edit Abstract"><i class="material-icons">edit</i></button>
-                        </a>
-                        <br><br>
+                        </form>
+
+                        <br>
                         <form method="POST" action="{{route('abstractsubmitted.delete')}}">
                         @csrf
                         <input type="hidden" name="id" value="{{$data->id}}">
                         <button type="submit" class="btn btn-danger" title="Delete Abstract"><i class="material-icons">delete</i></button>
                         </form>
                     </td>
+                    @endif
+
                     </tr>
                     @endforeach
                 </tbody>

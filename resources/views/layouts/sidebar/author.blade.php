@@ -3,7 +3,7 @@
         <nav class="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
         <a class="navbar-brand w-100 mr-0" href="{{route('dashboard')}}" style="line-height: 25px;">
             <div class="d-table m-auto">
-            <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="storage/app/public/{{Logo()}}" alt="Shards Dashboard">
+            <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="{{asset('public/logo.png')}}">
             <span class="d-none d-md-inline ml-1">ICTCRED Author</span>
             </div>
         </a>
@@ -53,18 +53,67 @@
 
                 </ul>
             </div>
+
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link collapsed" data-toggle="collapse" href="#paper-reviewed" aria-expanded="false">
                     <i class="material-icons">archive</i>
                     <span>Paper Reviewed</span>
                 </a>
             </li>
+
+            <div class="collapse" id="paper-reviewed">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="dropdown-item" href="{{route('abstractafterreview.read')}}">
+                            <span class="sidebar-normal">Abstract</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="dropdown-item" href="{{route('abstractreviewedreviewauthor.read')}}">
+                            <span class="sidebar-normal">Abstract Reviewed</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="dropdown-item" href="{{route('abstractfinalauthor.read')}}">
+                            <span class="sidebar-normal">Abstract Final Presentation</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="dropdown-item" href="{{route('fullpaper.read')}}">
+                            <span class="sidebar-normal">Full Paper</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="dropdown-item" href="{{route('fullpaperunderview.read')}}">
+                            <span class="sidebar-normal">Full Paper Underview</span>
+                        </a>
+                    </li>
+
+                    <span class="sidebar-normal text-center">-----------After Conference--------------</span>
+                    <li class="nav-item">
+                    <a class="dropdown-item" href="{{route('fullpapercameraready.read')}}">
+                            <span class="sidebar-normal">Full Paper Camera Ready</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
             <li class="nav-item">
+                <a class="nav-link" href="{{route('powerpoint.read')}}">
+                    <i class="material-icons">description</i>
+                    <span class="sidebar-normal">PowerPoint</span>
+                </a>
+            </li>
+
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="material-icons">history</i>
                     <span>Log Acitivity</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>
     </div>
 </aside>
